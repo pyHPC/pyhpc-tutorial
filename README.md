@@ -1,0 +1,33 @@
+Python in HPC Tutorial  - Supercomputing 2012
+=============================================
+
+Python is a versatile language for the HPC community, with tools as diverse as
+visualizing large amounts of data, creating innovative user interfaces, and
+running large distributed jobs. Unfortunately, Python has a reputation for
+being slow and unfit for HPC computing. HPC Python experts and their sixty-five
+thousand cores disagree. As HPC increases its vision to big data and
+non-traditional applications, it must also use languages that are easier for
+the novice, more robust to general computing, and more productive for the
+expert.
+
+Using Python in a performant way moves HPC applications ever closer to
+these goals. This success has made Python a requirement for supporting users
+new to the HPC field and a good choice for practitioners to adopt. In this
+tutorial, we give students practical experience using Python for scientific
+computing tasks from leaders in the field of Scientific Python. Coming from
+diverse academic backgrounds, we show common tasks that are applicable to
+all.
+
+Topics include linear algebra and array computing with NumPy, interactive
+and parallel software development with IPython, performance and painless
+low-level C linking with Cython, and the friendliest performant interfaces to
+MPI at Supercomputing this year.
+
+
+Using the material
+------------------
+
+This tutorial is developed as a set of ipython notebooks.  To run, you only need
+to navigate to this and type ipython notebook.
+
+
