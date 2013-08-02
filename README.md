@@ -1,4 +1,4 @@
-Python in HPC Tutorial  - Saudi Arabian High Performance Computing Users' Group Conference 2012
+Python in HPC Tutorial  
 =============================================
 
 Python is a versatile language for the HPC community, with tools as diverse as
@@ -19,7 +19,7 @@ computing tasks from leaders in the field of Scientific Python.
 Topics include linear algebra and array computing with NumPy, interactive
 and parallel software development with IPython, performance and painless
 low-level C linking with Cython, and the friendliest performant interfaces to
-MPI demonstrated at Supercomputing 2012.
+MPI available.
 
 
 Using the material
