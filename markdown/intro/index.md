@@ -1,0 +1,10 @@
+intro.md
+why.md
+tour.md
+building_blocks.md
+hpc_building_blocks.md
+ipython.md
+matplotlib.md
+numpy.md
+scipy.md
+conclusion.md
