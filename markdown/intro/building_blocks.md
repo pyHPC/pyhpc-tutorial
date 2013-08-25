@@ -1,5 +1,5 @@
-Building Blocks
----------------
+Basic Building Blocks
+---------------------
 
 Scientific Python is un-bundled, so users need some basic building blocks.
 
@@ -48,6 +48,23 @@ that can be combined to obtain a scientific computing environment:
     ![image](/figures/intro/random_c.jpg)  
 -   **Matplotlib** : 2-D visualization, "publication-ready" plots
     [http://matplotlib.sourceforge.net](http://matplotlib.sourceforge.net)/
+
+
+
+-   **SymPy**:  Symbolic computing inside python
+    [http://sympy.org](http://sympy.org)
+
+
+
+-   **Pandas**: Data manipulation
+    [http://pandas.pydata.org](http://pandas.pydata.org)
+
+
+-   **PyTables**:
+
+
+
+-   **Cython**:
 
 
 
