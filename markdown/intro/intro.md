@@ -1,6 +1,3 @@
-Introduction
-============
-
 Introduction to Python
 ------------
 
@@ -13,3 +10,12 @@ a computational scientist.
 
 
 
+### Sources
+
+- Scipy Lectures [http://scipy-lectures.github.io](scipy-lectures.github.io)
+- Software Carpentry [https://github.com/swcarpentry/boot-camps](https://github.com/swcarpentry/boot-camps)
+  
+### See also
+
+- Scipy Conference Tutorials:  [http://conference.scipy.org/scipy2013/tutorials_schedule.php](http://conference.scipy.org/scipy2013/tutorials_schedule.php)
+  

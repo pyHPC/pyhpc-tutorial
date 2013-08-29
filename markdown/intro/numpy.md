@@ -4,7 +4,7 @@ NumPy
 Python library that provides multi-dimensional arrays, tables, and matrices for Python
 
 <center>
-![image](/figures/intro/array1D.2.lightbg.png)
+![image](../figures/intro/array1D.2.lightbg.png)
 </center>
 
 - Contiguous or strided arrays
@@ -31,7 +31,7 @@ Python library that provides multi-dimensional arrays, tables, and matrices for 
 ### NumPy Ecosystem
 
 <center>
-![image](/figures/intro/ecosystem.lightbg.png)
+![image](../figures/intro/ecosystem.lightbg.png)
 </center>
 
 

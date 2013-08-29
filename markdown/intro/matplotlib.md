@@ -9,7 +9,7 @@ Matplotlib - Plotting
 
 
 Simple plot  
-<img src="/figures/intro/simple_plot.png" style="width: 600px;"/>
+<img src="../figures/intro/simple_plot.png" style="width: 600px;"/>
 ```python
 import pylab as pl
 import numpy as np
@@ -49,7 +49,7 @@ pl.show()
 
 
 Change linestyles  
-<img src="/figures/intro/simple_plot_cust.png" style="width: 600px;"/>
+<img src="../figures/intro/simple_plot_cust.png" style="width: 600px;"/>
 ```python
 pl.figure(figsize=(10, 6), dpi=80)
 pl.plot(X, C, color="blue", linewidth=2.5, linestyle="-")
@@ -59,7 +59,7 @@ pl.plot(X, S, color="red",  linewidth=2.5, linestyle="-")
 
 
 Adding legend  
-<img src="/figures/intro/simple_plot_legend.png" style="width: 600px;"/>
+<img src="../figures/intro/simple_plot_legend.png" style="width: 600px;"/>
 ```python
 pl.plot(X, C, color="blue", linewidth=2.5, linestyle="-", label="cosine")
 pl.plot(X, S, color="green", linewidth=2.5, linestyle="--", label="sine") # Set x limits
@@ -69,7 +69,7 @@ pl.legend(loc='upper left')
 
 
 Moving splines  
-<img src="/figures/intro/simple_plot_cust2.png" style="width: 600px;"/>
+<img src="../figures/intro/simple_plot_cust2.png" style="width: 600px;"/>
 ```python
 ax = pl.gca() # gca stands for 'get current axis'
 ax.spines['right'].set_color('none') 
@@ -83,7 +83,7 @@ ax.spines['left'].set_position(('data',0))
 
 
 Histograms  
-<img src="/figures/intro/hist.png" style="width: 600px;"/>
+<img src="../figures/intro/hist.png" style="width: 600px;"/>
 
 ```python
 import pylab as pl
@@ -95,7 +95,7 @@ pl.show()
 
 
 Add a fit line and legend  
-<img src="/figures/intro/hist_legend_fit.png" style="width: 600px;"/>
+<img src="../figures/intro/hist_legend_fit.png" style="width: 600px;"/>
 ```python
 n, bins, patches = pl.hist(pl.randn(1000), 40, normed=1)
 l, = pl.plot(bins, pl.normpdf(bins, 0.0, 1.0), 'r--', label='fit', linewidth=3)
@@ -104,20 +104,22 @@ legend([l, patches[0]], ['fit', 'hist'])
 
 
 
-Other types of plots include  
-- Scatter
-- Bar
-- Pie
-- Sankey
-- Images
-- Quivers
-- Multiplots
-- Polar 
-- 3D 
+Other types of plots include:
+
+*  Scatter
+*  Bar
+*  Pie
+*  Sankey
+*  Images
+*  Quivers
+*  Multiplots
+*  Polar 
+*  3D 
 
 
 
 Other elements to know about:
+
 - Ticks: control how the ticks look
 - Annotations: Add visual elements to your plot
 - Axes: draw plots on top of themselves

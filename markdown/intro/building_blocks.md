@@ -27,9 +27,9 @@ that can be combined to obtain a scientific computing environment:
 
 
 
-    ![image](/figures/intro/snapshot_ipython.png)  
+    ![image](../figures/intro/snapshot_ipython.png)  
 -   **IPython**, an advanced **Python shell**
-    [http://ipython.scipy.org/moin](http://ipython.scipy.org/moin)/
+    [http://ipython.org](http://ipython.org)/
 
 
 
@@ -45,9 +45,9 @@ that can be combined to obtain a scientific computing environment:
 
 
 
-    ![image](/figures/intro/random_c.jpg)  
+    ![image](../figures/intro/random_c.jpg)  
 -   **Matplotlib** : 2-D visualization, "publication-ready" plots
-    [http://matplotlib.sourceforge.net](http://matplotlib.sourceforge.net)/
+    [http://matplotlib.org/](http://matplotlib.org/)
 
 
 
@@ -60,14 +60,17 @@ that can be combined to obtain a scientific computing environment:
     [http://pandas.pydata.org](http://pandas.pydata.org)
 
 
--   **PyTables**:
+
+-   **PyTables**: Very large on node files and operations
+    [http://www.pytables.org/](http://www.pytables.org/)
 
 
 
--   **Cython**:
+-   **Cython**: Compile Typed Python to C and call C functions
+    [http://cython.org/](http://cython.org/)
 
 
 
-    ![image](/figures/intro/example_surface_from_irregular_data.jpg)  
+    ![image](../figures/intro/example_surface_from_irregular_data.jpg)  
 -   **Mayavi** : 3-D visualization
     [http://code.enthought.com/projects/mayavi](http://code.enthought.com/projects/mayavi)/
