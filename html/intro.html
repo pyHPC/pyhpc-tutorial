@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Python for Science</title>
+
+        <meta name="author" content="pyHPC Team">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/serif.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/xcode.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style type="text/css">
+            ul { margin-bottom: 25px; }
+            li li { list-style: circle; }
+li.left {
+    float: left;
+    clear: left;
+    margin: 0px 0px 10px -150px;
+}
+li.right {
+    margin: 10px 0px 0px 150px;
+}
+        </style>
+
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section class="center">
+                    <h1 style="padding-top:10%">Introduction to Python for Science</h1>
+                    <h4 style="padding-top:5%">http://www.pyHPC.org</h4>
+                </section>
+
+                <section data-markdown="../markdown/intro/intro.md" data-separator="^\n\n\n"></section>
+                <section data-markdown="../markdown/intro/why.md" data-separator="^\n\n\n"></section>
+                <section data-markdown="../markdown/intro/tour.md" data-separator="^\n\n\n"></section>
+                <section data-markdown="../markdown/intro/building_blocks.md" data-separator="^\n\n\n"></section>
+                <section data-markdown="../markdown/intro/hpc_building_blocks.md" data-separator="^\n\n\n"></section>
+                <section data-markdown="../markdown/intro/ipython.md" data-separator="^\n\n\n"></section>
+                <section data-markdown="../markdown/intro/matplotlib.md" data-separator="^\n\n\n"></section>
+                <section data-markdown="../markdown/intro/numpy.md" data-separator="^\n\n\n"></section>
+                <section data-markdown="../markdown/intro/scipy.md" data-separator="^\n\n\n"></section>
+
+
+
+            </div>
+        </div>
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+        <script type="text/javascript" src="mathjax/MathJax.js?config=default"></script>
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+        <script>
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: false,
+                rollingLinks: false,
+                transition: 'none',
+                width: 1024,
+                height: 768,
+
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                ]
+            });
+
+        </script>
+    </body>
+</html>
