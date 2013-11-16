@@ -5,10 +5,10 @@ from numpy import mgrid
 petsc4py.init(sys.argv)
 from petsc4py import PETSc
 try:
-    from matplotlib import pylab
+    from matplotlib import pyplot as plt
 except ImportError:
     PETSc.Sys.Print("matplotlib not available")
-    pylab = None
+    plt = None
 import CavityFlow2D
 
 """
@@ -58,9 +58,9 @@ def get_args():
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--nx', default=32,help='number of grid points in x')
     parser.add_argument('--ny', default=32,help='number of grid points in y')
-    parser.add_argument('--lidvelocity', help='dimensionless velocity of the lid\n(1/(nx*ny) if unspecified')
-    parser.add_argument('--grashof', default=1.0,help='dimensionless temperature gradient')
-    parser.add_argument('--prandtl', default=1.0,help='dimensionless thermal/momentum diffusivity ratio')
+    parser.add_argument('--lidvelocity', help='dimensionless velocity of the lid\n(1/(nx*ny) if unspecified', type=float)
+    parser.add_argument('--grashof', default=1.0,help='dimensionless temperature gradient', type=float)
+    parser.add_argument('--prandtl', default=1.0,help='dimensionless thermal/momentum diffusivity ratio', type=float)
     parser.add_argument('--plot', help='use matplotlib to visualize solution')
     args, petsc_opts = parser.parse_known_args()
 
@@ -72,7 +72,6 @@ def cavity_flow2D(nx, ny, lidvelocity, grashof, prandtl):
     # create application context
     # and PETSc nonlinear solver
     snes = PETSc.SNES().create()
-#    snes.getKSP().getPC().setType('lu')
     da = PETSc.DMDA().create([nx,ny],dof=4, stencil_width=1, stencil_type='star')
 
     # set up solution vector
@@ -90,29 +89,20 @@ def cavity_flow2D(nx, ny, lidvelocity, grashof, prandtl):
     snes.solve(None, x)
     return x
 
-def plot(x):
+def plot(x, nx, ny):
     """Plot solution to screen"""
-    X, Y =  mgrid[0:1:1j*nx,0:1:1j*ny]
-    Z = x[...].reshape(nx,ny)
-    pylab.figure()
-    pylab.contourf(X,Y,Z)
-    pylab.colorbar()
-    pylab.plot(X.ravel(),Y.ravel(),'.k')
-    pylab.axis('equal')
-    pylab.show()
-
-def plot_petsc(x):
-    da = PETSc.DMDA().create([nx,ny],dof=4)
-    u = da.createGlobalVec()
-    x.copy(u)
-    draw = PETSc.Viewer.DRAW()
-    OptDB['draw_pause'] = 1
-    draw(u)
+    plt.ioff()
+    Z = x[...].reshape(nx,ny,4)
+    fig, axs = plt.subplots(2,2, figsize=(10,8))
+    titles = ['u', 'v', 'vorticity', 'temperature']
+    for idx, ax in enumerate(axs.ravel()):
+        cs = ax.contourf(Z[:,:,idx], 100)
+        fig.colorbar(cs, ax=ax, shrink=0.9)
+        ax.set_title(titles[idx])
+    plt.show()
         
 if __name__ == "__main__":
     args = get_args()
     print "running cavity flow with: %s" % args
     x = cavity_flow2D(args.nx, args.ny, args.lidvelocity, args.grashof, args.prandtl)
-    if args.plot:
-        plot(x)                        
-                        
+    plot(x, args.nx, args.ny)                        
