@@ -1,52 +1,4 @@
-/* ------------------------------------------------------------------------
-Nonlinear driven cavity in 2d
-
-This problem is modeled by the partial differential equation system
-
-- Lap(U) - Grad_y(Omega) = 0
-- Lap(V) + Grad_x(Omega) = 0
-- Lap(Omega) + Div([U*Omega,V*Omega]) - GR*Grad_x(T) = 0
-- Lap(T) + PR*Div([U*T,V*T]) = 0
-
-in the unit square, which is uniformly discretized in each of x and
-y in this simple encoding.
-
-No-slip, rigid-wall Dirichlet conditions are used for [U,V].
-Dirichlet conditions are used for Omega, based on the definition of
-vorticity: Omega = - Grad_y(U) + Grad_x(V), where along each
-constant coordinate boundary, the tangential derivative is zero.
-Dirichlet conditions are used for T on the left and right walls,
-and insulation homogeneous Neumann conditions are used for T on
-the top and bottom walls. 
-
-A finite difference approximation with the usual 5-point stencil 
-is used to discretize the boundary value problem to obtain a 
-nonlinear system of equations.  Upwinding is used for the divergence
-(convective) terms and central for the gradient (source) terms.
-
-The Jacobian can be either
-* formed via finite differencing using coloring (the default), or
-* applied matrix-free via the option -snes_mf 
-(for larger grid problems this variant may not converge 
-without a preconditioner due to ill-conditioning).
-
-The 2D driven cavity problem is solved in a velocity-vorticity formulation.
-The flow can be driven with the lid or with bouyancy or both:
--lidvelocity <lid>, where <lid> = dimensionless velocity of lid
--grashof <gr>, where <gr> = dimensionless temperature gradent
--prandtl <pr>, where <pr> = dimensionless thermal/momentum diffusity ratio
--contours : draw contour plots of solution
-  ------------------------------------------------------------------------- */
-
 #include "CavityFlow2Dimpl.h"
-
-#if PETSC_VERSION_(3,1,0)
-#define DMDAGetInfo(da,dim,M,N,P,m,n,p,dof,s,bx,by,bz,st) \
-        DAGetInfo((DA)da,dim,M,N,P,m,n,p,dof,s,bx,st)
-#define DMDAGetCorners(da,x,y,z,m,n,p) DAGetCorners((DA)da,x,y,z,m,n,p)
-#define DMDAVecGetArray(da,v,a)        DAVecGetArray((DA)da,v,a)
-#define DMDAVecRestoreArray(da,v,a)    DAVecRestoreArray((DA)da,v,a)
-#endif
 
 
 #undef __FUNCT__
@@ -55,8 +7,8 @@ The flow can be driven with the lid or with bouyancy or both:
    FormInitialGuess - Forms initial approximation.
 
    Input Parameters:
-   user - user-defined application context
    X - vector
+   p - user parameters
 
    Output Parameter:
    X - vector
@@ -68,7 +20,11 @@ PetscErrorCode FormInitGuess(DM da,Vec X,Params *p)
   PetscReal      grashof,dx;
   Field          **x;
 
-  grashof = user->grashof_;
+  printf("grashof: %e\n", p->grashof_);
+  printf("prantdl: %e\n", p->prandtl_);
+  printf("lidvelocity: %e\n", p->lidvelocity_);
+
+  grashof = p->grashof_;
 
   ierr = DMDAGetInfo(da,0,&mx,0,0,0,0,0,0,0,0,0,0,0);CHKERRQ(ierr);
   dx  = 1.0/(mx-1);
@@ -247,16 +203,14 @@ PetscErrorCode FormFunctionLocal(DMDALocalInfo *info,Field **x,Field **f,Params 
 
 #undef __FUNCT__
 #define __FUNCT__ "FormFunction"
-PetscErrorCode FormFunction(SNES snes, Vec X, Vec F, Params *p)
+PetscErrorCode FormFunction(DM da, Vec X, Vec F, Params *p)
 {
   DMDALocalInfo  info;
   Field          **u,**fu;
   PetscErrorCode ierr;
   Vec            localX;
-  DM             da;
 
   PetscFunctionBegin;
-  ierr = SNESGetDM(snes,(DM*)&da);CHKERRQ(ierr);
   ierr = DMGetLocalVector(da,&localX);CHKERRQ(ierr);
   /*
      Scatter ghost points to local vector, using the 2-step process

@@ -10,11 +10,15 @@
 #endif
 
 typedef struct Params {
-  double alpha_, lidvelocity_, prandtl_, grashof_;
+  double lidvelocity_, prandtl_, grashof_;
 } Params;
+
+typedef struct {
+  PetscScalar u,v,omega,temp;
+} Field;
 
 PetscErrorCode FormInitGuess(DM da, Vec x, Params *p);
 PetscErrorCode FormFunction(DM da, Vec x, Vec F, Params *p);
-PetscErrorCode FormFunctionLocal(DMDALocalInfo *info,Field **x,Field **f,Params *p)
+PetscErrorCode FormFunctionLocal(DMDALocalInfo *info,Field **x,Field **f,Params *p);
 
 #endif /* !CAVITYFLOW2D_H */
