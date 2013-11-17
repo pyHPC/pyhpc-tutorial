@@ -1,6 +1,6 @@
 from petsc4py.PETSc cimport Vec,  PetscVec
 from petsc4py.PETSc cimport Mat,  PetscMat
-from petsc4py.PETSc cimport DA,   PetscDM
+from petsc4py.PETSc cimport DMDA,   PetscDM
 from petsc4py.PETSc cimport SNES, PetscSNES
 
 from petsc4py.PETSc import Error
