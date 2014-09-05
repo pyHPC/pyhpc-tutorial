@@ -1,3 +1,8 @@
 *~
 *.pyc
 node_modules/*
+examples/data/f_numbers
+notebooks/.ipynb_checkpoints/01_Introducing_Python-checkpoint.ipynb
+notebooks/.ipynb_checkpoints/02_Speeding_Python-checkpoint.ipynb
+notebooks/.ipynb_checkpoints/03_Scaling_Python-checkpoint.ipynb
+notebooks/file.mat
