@@ -7,8 +7,8 @@ function (named so we can distinguish it from the sped-up versions of `fib()`).
 
 For baseline timings, lets time its performance in the IPython interpreter:
 
-    $ ipython
-    [...]
+    $ ipython --no-banner
+    
     In [1]: from pyfib import pyfib
 
     In [2]: %timeit pyfib(10)
@@ -34,8 +34,8 @@ directory.
 2. You can load this extension module in an interactive interpreter (here,
 IPython), like so:
 
-    $ ipython
-    [...]
+    $ ipython --no-banner
+    
     In [1]: from fib import fib
 
     In [2]: fib(10)
