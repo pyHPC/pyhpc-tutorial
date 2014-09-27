@@ -1,0 +1,728 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass{article}
+
+    
+    
+    \usepackage{graphicx} % Used to insert images
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{color} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    
+
+    
+    
+    \definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+    \definecolor{darkorange}{rgb}{.71,0.21,0.01}
+    \definecolor{darkgreen}{rgb}{.12,.54,.11}
+    \definecolor{myteal}{rgb}{.26, .44, .56}
+    \definecolor{gray}{gray}{0.45}
+    \definecolor{lightgray}{gray}{.95}
+    \definecolor{mediumgray}{gray}{.8}
+    \definecolor{inputbackground}{rgb}{.95, .95, .85}
+    \definecolor{outputbackground}{rgb}{.95, .95, .95}
+    \definecolor{traceback}{rgb}{1, .95, .95}
+    % ansi colors
+    \definecolor{red}{rgb}{.6,0,0}
+    \definecolor{green}{rgb}{0,.65,0}
+    \definecolor{brown}{rgb}{0.6,0.6,0}
+    \definecolor{blue}{rgb}{0,.145,.698}
+    \definecolor{purple}{rgb}{.698,.145,.698}
+    \definecolor{cyan}{rgb}{0,.698,.698}
+    \definecolor{lightgray}{gray}{0.5}
+    
+    % bright ansi colors
+    \definecolor{darkgray}{gray}{0.25}
+    \definecolor{lightred}{rgb}{1.0,0.39,0.28}
+    \definecolor{lightgreen}{rgb}{0.48,0.99,0.0}
+    \definecolor{lightblue}{rgb}{0.53,0.81,0.92}
+    \definecolor{lightpurple}{rgb}{0.87,0.63,0.87}
+    \definecolor{lightcyan}{rgb}{0.5,1.0,0.83}
+    
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Appendix\_02\_PETSc4Py}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=blue,
+      linkcolor=darkorange,
+      citecolor=darkgreen,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Appendix 2: petsc4py}\label{appendix-2-petsc4py}
+
+\section{Python in HPC}\label{python-in-hpc}
+
+
+Aron Ahmadia, PhD
+
+\href{http://creativecommons.org/licenses/by/3.0/deed.en_US}{\includegraphics{../figures/creative_commons_logo.png}}
+
+\subsection{Interacting with the Tutorial
+Slides}\label{interacting-with-the-tutorial-slides}
+
+This tutorial is an interactive worksheet designed to encourage you to
+try out the lessons during the demonstration. If you are looking at the
+pdf version, we encourage you to download the updated version (see
+previous slide) and try the interactive version.
+
+To run the interactive version, you need a good Python environment
+including:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  IPython version \textgreater{}= 13.0
+\item
+  Numpy version \textgreater{}= 1.5
+\item
+  Scipy
+\item
+  Matplotlib
+\end{itemize}
+
+Move to the directory containing the tarball and execute:
+
+\begin{verbatim}
+$ ipython notebook --pylab=inline
+\end{verbatim}
+
+We heartily endorse the
+\href{https://store.continuum.io/cshop/anaconda}{Anaconda distribution}
+and the \href{http://www.enthought.com/products/epd_free.php}{Free
+Enthought Python Distribution}.
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{Acknowledgements}\label{acknowledgements}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  petsc4py examples developed by
+  \href{http://www.bu.edu/pasi/people/lisandro-dalcin/}{Lisandro Dalcin}
+\item
+  \href{http://code.google.com/p/petsc4py/}{petsc4py} petsc4py are
+  Python bindings for \href{http://www.mcs.anl.gov/petsc/}{PETSc}, the
+  Portable, Extensible Toolkit for Scientific Computation.
+\end{itemize}
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{What is PETSc}\label{what-is-petsc}
+
+``PETSc\ldots{}is a suite of data structures and routines for the
+scalable (parallel) solution of scientific applications modeled by
+partial differential equations. It supports MPI,~shared memory pthreads,
+and~NVIDIA GPUs, as well as hybrid MPI-shared memory pthreads or MPI-GPU
+parallelism''
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{PETSc's Role}\label{petscs-role}
+
+Developing parallel, nontrivial PDE solvers that deliver high
+performance is still difficult and requires months (or even years) of
+concentrated effort. PETSc is a toolkit that can ease these difficulties
+and reduce the development time, but it is not a black-box PDE solver,
+nor a silver bullet. Barry Smith
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{What can you use it for?}\label{what-can-you-use-it-for}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Scientific Computations: parallel linear algebra, in particular linear
+  and nonlinear solvers
+\item
+  Toolkit: Contains high level solvers, but also the low level tools to
+  roll your own.
+\item
+  Portable: Available on many platforms, basically anything that has MPI
+\end{itemize}
+
+Why use it? It's big, powerful, well supported.
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{A bit more about PETSc}\label{a-bit-more-about-petsc}
+
+What problems can it tackle:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Serial and Parallel
+\item
+  Linear and nonlinear
+\item
+  Finite difference and finite element
+\item
+  Structured and unstructured
+\end{itemize}
+
+What is in PETSc:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Linear system solvers (sparse/dense, iterative/direct)
+\item
+  Nonlinear system solvers
+\item
+  Tools for distributed matrices
+\item
+  Support for profiling, debugging, graphical output
+\end{itemize}
+
+And much much more
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{Where to learn more about
+PETSc}\label{where-to-learn-more-about-petsc}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  PETSc Tutorial at TACC
+\item
+  Regular tutorials by PETSc developers
+\item
+  \href{http://www.mcs.anl.gov/petsc/}{The PETSc website}
+\item
+  \href{http://www.mcs.anl.gov/petsc/documentation/index.html}{The PETSc
+  documentation}
+\item
+  PETSc source code examples in the tarball
+\end{itemize}
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{PETSc4Py}\label{petsc4py}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Python bindings for PETSc, the Portable Extensible Toolkit for
+  Scientic Computation
+\item
+  Implemented with Cython
+\item
+  A good friend of petsc4py is:
+\item
+  mpi4py: Python bindings for MPI, the Message Passing Interface
+\item
+  Other two projects depend on petsc4py:
+\item
+  slepc4py: Python bindings for SLEPc, the Scalable Library for
+  Eigenvalue Problem Computations
+\item
+  tao4py: Python bindings for TAO, the Toolkit for Advanced Optimization
+\end{itemize}
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{Python for control and logic C for local
+computation}\label{python-for-control-and-logic-c-for-local-computation}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Decouple organization of storage from mathematical operations
+\item
+  Vectors are not arrays
+\item
+  Lots of small arrays
+\item
+  get/setValues() methods
+\item
+  Views into larger arrays
+\item
+  Dense, local computation is cache/bandwidth efficient
+\end{itemize}
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{PETSc4Py Interface}\label{petsc4py-interface}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Using PETSc4Py is very similar to using MPI4Py
+\item
+  Provides ALL PETSc functionality in a Pythonic way
+\item
+  Manages all memory (creation/destruction)
+\item
+  Visualization with matplotlib
+\end{itemize}
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{PETSc4Py Basic Operations}\label{petsc4py-basic-operations}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Create a sparse matrix, set its size and type:
+\item
+  A = PETSc.Mat()
+\item
+  A.create(PETSc.COMM\_WORLD)
+\item
+  A.setSizes({[}m\emph{n, m}n{]})
+\item
+  A.setType(`mpiaij')
+\item
+  Create a linear solver and solve:
+\item
+  ksp = PETSc.KSP()
+\item
+  ksp.create(PETSc.COMM\_WORLD)
+\item
+  ksp.setOperators(A)
+\item
+  ksp.setFromOptions()
+\item
+  ksp.solve(b, x)
+\end{itemize}
+
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{PETSc4Py Example}\label{petsc4py-example}
+
+2D Poisson problem: -Laplacian(u) = 1, 0 \textless{} x,y \textless{} 1
+
+with boundary conditions u = 0 for x=0, x=1, y=0, y=1
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{try}\PY{p}{:} \PY{n+nb}{range} \PY{o}{=} \PY{n+nb}{xrange}
+        \PY{k}{except}\PY{p}{:} \PY{k}{pass}
+        
+        \PY{k+kn}{import} \PY{n+nn}{sys}\PY{o}{,} \PY{n+nn}{petsc4py}
+        \PY{n}{petsc4py}\PY{o}{.}\PY{n}{init}\PY{p}{(}\PY{n}{sys}\PY{o}{.}\PY{n}{argv}\PY{p}{)}
+        
+        \PY{k+kn}{from} \PY{n+nn}{petsc4py} \PY{k+kn}{import} \PY{n}{PETSc}
+        
+        \PY{k}{class} \PY{n+nc}{Poisson2D}\PY{p}{(}\PY{n+nb}{object}\PY{p}{)}\PY{p}{:}
+        
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{da}\PY{p}{)}\PY{p}{:}
+                \PY{k}{assert} \PY{n}{da}\PY{o}{.}\PY{n}{getDim}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{2}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da} \PY{o}{=} \PY{n}{da}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{localX}  \PY{o}{=} \PY{n}{da}\PY{o}{.}\PY{n}{createLocalVec}\PY{p}{(}\PY{p}{)}
+        
+            \PY{k}{def} \PY{n+nf}{formRHS}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{B}\PY{p}{)}\PY{p}{:}
+                \PY{n}{b} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getVecArray}\PY{p}{(}\PY{n}{B}\PY{p}{)}
+                \PY{n}{mx}\PY{p}{,} \PY{n}{my} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getSizes}\PY{p}{(}\PY{p}{)}
+                \PY{n}{hx}\PY{p}{,} \PY{n}{hy} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{o}{/}\PY{n}{m} \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{p}{[}\PY{n}{mx}\PY{p}{,} \PY{n}{my}\PY{p}{]}\PY{p}{]}
+                \PY{p}{(}\PY{n}{xs}\PY{p}{,} \PY{n}{xe}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{ys}\PY{p}{,} \PY{n}{ye}\PY{p}{)} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getRanges}\PY{p}{(}\PY{p}{)}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{ys}\PY{p}{,} \PY{n}{ye}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{xs}\PY{p}{,} \PY{n}{xe}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{b}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{*}\PY{n}{hx}\PY{o}{*}\PY{n}{hy}
+        
+            \PY{k}{def} \PY{n+nf}{mult}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{mat}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{)}\PY{p}{:}
+                \PY{c}{\PYZsh{}}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{globalToLocal}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{localX}\PY{p}{)}
+                \PY{n}{x} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getVecArray}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{localX}\PY{p}{)}
+                \PY{n}{y} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getVecArray}\PY{p}{(}\PY{n}{Y}\PY{p}{)}
+                \PY{c}{\PYZsh{}}
+                \PY{n}{mx}\PY{p}{,} \PY{n}{my} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getSizes}\PY{p}{(}\PY{p}{)}
+                \PY{n}{hx}\PY{p}{,} \PY{n}{hy} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{o}{/}\PY{n}{m} \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{p}{[}\PY{n}{mx}\PY{p}{,} \PY{n}{my}\PY{p}{]}\PY{p}{]}
+                \PY{p}{(}\PY{n}{xs}\PY{p}{,} \PY{n}{xe}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{ys}\PY{p}{,} \PY{n}{ye}\PY{p}{)} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getRanges}\PY{p}{(}\PY{p}{)}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{ys}\PY{p}{,} \PY{n}{ye}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{xs}\PY{p}{,} \PY{n}{xe}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{u} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{c}{\PYZsh{} center}
+                        \PY{n}{u\PYZus{}e} \PY{o}{=} \PY{n}{u\PYZus{}w} \PY{o}{=} \PY{n}{u\PYZus{}n} \PY{o}{=} \PY{n}{u\PYZus{}s} \PY{o}{=} \PY{l+m+mi}{0}
+                        \PY{k}{if} \PY{n}{i} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}    \PY{n}{u\PYZus{}w} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{c}{\PYZsh{} west}
+                        \PY{k}{if} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{mx}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{n}{u\PYZus{}e} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{c}{\PYZsh{} east}
+                        \PY{k}{if} \PY{n}{j} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}    \PY{n}{u\PYZus{}s} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{c}{\PYZsh{} south}
+                        \PY{k}{if} \PY{n}{j} \PY{o}{\PYZlt{}} \PY{n}{ny}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{n}{u\PYZus{}n} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]} \PY{c}{\PYZsh{} north}
+                        \PY{n}{u\PYZus{}xx} \PY{o}{=} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{u\PYZus{}e} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{u} \PY{o}{\PYZhy{}} \PY{n}{u\PYZus{}w}\PY{p}{)}\PY{o}{*}\PY{n}{hy}\PY{o}{/}\PY{n}{hx}
+                        \PY{n}{u\PYZus{}yy} \PY{o}{=} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{u\PYZus{}n} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{u} \PY{o}{\PYZhy{}} \PY{n}{u\PYZus{}s}\PY{p}{)}\PY{o}{*}\PY{n}{hx}\PY{o}{/}\PY{n}{hy}
+                        \PY{n}{y}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{u\PYZus{}xx} \PY{o}{+} \PY{n}{u\PYZus{}yy}
+        
+        \PY{n}{OptDB} \PY{o}{=} \PY{n}{PETSc}\PY{o}{.}\PY{n}{Options}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{n}  \PY{o}{=} \PY{n}{OptDB}\PY{o}{.}\PY{n}{getInt}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{n}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{nx} \PY{o}{=} \PY{n}{OptDB}\PY{o}{.}\PY{n}{getInt}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{nx}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+        \PY{n}{ny} \PY{o}{=} \PY{n}{OptDB}\PY{o}{.}\PY{n}{getInt}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{ny}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+        
+        \PY{n}{da} \PY{o}{=} \PY{n}{PETSc}\PY{o}{.}\PY{n}{DA}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{create}\PY{p}{(}\PY{p}{[}\PY{n}{nx}\PY{p}{,} \PY{n}{ny}\PY{p}{]}\PY{p}{,} \PY{n}{stencil\PYZus{}width}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{pde} \PY{o}{=} \PY{n}{Poisson2D}\PY{p}{(}\PY{n}{da}\PY{p}{)}
+        
+        \PY{n}{x} \PY{o}{=} \PY{n}{da}\PY{o}{.}\PY{n}{createGlobalVec}\PY{p}{(}\PY{p}{)}
+        \PY{n}{b} \PY{o}{=} \PY{n}{da}\PY{o}{.}\PY{n}{createGlobalVec}\PY{p}{(}\PY{p}{)}
+        \PY{c}{\PYZsh{} A = da.createMat(\PYZsq{}python\PYZsq{})}
+        \PY{n}{A} \PY{o}{=} \PY{n}{PETSc}\PY{o}{.}\PY{n}{Mat}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{createPython}\PY{p}{(}
+            \PY{p}{[}\PY{n}{x}\PY{o}{.}\PY{n}{getSizes}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{b}\PY{o}{.}\PY{n}{getSizes}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{comm}\PY{o}{=}\PY{n}{da}\PY{o}{.}\PY{n}{comm}\PY{p}{)}
+        \PY{n}{A}\PY{o}{.}\PY{n}{setPythonContext}\PY{p}{(}\PY{n}{pde}\PY{p}{)}
+        \PY{n}{A}\PY{o}{.}\PY{n}{setUp}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{ksp} \PY{o}{=} \PY{n}{PETSc}\PY{o}{.}\PY{n}{KSP}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{create}\PY{p}{(}\PY{p}{)}
+        \PY{n}{ksp}\PY{o}{.}\PY{n}{setOperators}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+        \PY{n}{ksp}\PY{o}{.}\PY{n}{setType}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{cg}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{pc} \PY{o}{=} \PY{n}{ksp}\PY{o}{.}\PY{n}{getPC}\PY{p}{(}\PY{p}{)}
+        \PY{n}{pc}\PY{o}{.}\PY{n}{setType}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{none}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{ksp}\PY{o}{.}\PY{n}{setFromOptions}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{pde}\PY{o}{.}\PY{n}{formRHS}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+        \PY{n}{ksp}\PY{o}{.}\PY{n}{solve}\PY{p}{(}\PY{n}{b}\PY{p}{,} \PY{n}{x}\PY{p}{)}
+        
+        \PY{n}{u} \PY{o}{=} \PY{n}{da}\PY{o}{.}\PY{n}{createNaturalVec}\PY{p}{(}\PY{p}{)}
+        \PY{n}{da}\PY{o}{.}\PY{n}{globalToNatural}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{u}\PY{p}{)}
+        
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k+kn}{import} \PY{n}{pylab}
+        \PY{k+kn}{from} \PY{n+nn}{numpy} \PY{k+kn}{import} \PY{n}{mgrid}
+        
+        \PY{n}{X}\PY{p}{,} \PY{n}{Y} \PY{o}{=}  \PY{n}{mgrid}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{1j}\PY{o}{*}\PY{n}{nx}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{1j}\PY{o}{*}\PY{n}{ny}\PY{p}{]}
+        \PY{n}{Z} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{o}{.}\PY{o}{.}\PY{o}{.}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{nx}\PY{p}{,}\PY{n}{ny}\PY{p}{,} \PY{n}{order}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{F}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{contourf}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{,}\PY{n}{Z}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{Y}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{.k}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{equal}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}    
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Appendix_02_PETSc4Py_files/Appendix_02_PETSc4Py_14_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\subsection{PETSc4Py and in parallel}\label{petsc4py-and-in-parallel}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c}{\PYZsh{} Some preliminaries to connect to the engines}
+        
+        \PY{k+kn}{from} \PY{n+nn}{IPython.parallel} \PY{k+kn}{import} \PY{n}{Client}
+        \PY{n}{c} \PY{o}{=} \PY{n}{Client}\PY{p}{(}\PY{p}{)}
+        \PY{n}{view} \PY{o}{=} \PY{n}{c}\PY{p}{[}\PY{p}{:}\PY{p}{]}
+        
+        \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} \PY{n}{parallelmagic}
+        \PY{n}{view}\PY{o}{.}\PY{n}{activate}\PY{p}{(}\PY{p}{)}
+        \PY{n}{view}\PY{o}{.}\PY{n}{block} \PY{o}{=} \PY{n+nb+bp}{True}
+        \PY{o}{\PYZpc{}}\PY{k}{autopx}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\%autopx enabled
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{try}\PY{p}{:} \PY{n+nb}{range} \PY{o}{=} \PY{n+nb}{xrange}
+        \PY{k}{except}\PY{p}{:} \PY{k}{pass}
+        
+        \PY{k+kn}{import} \PY{n+nn}{sys}\PY{o}{,} \PY{n+nn}{petsc4py}
+        \PY{n}{petsc4py}\PY{o}{.}\PY{n}{init}\PY{p}{(}\PY{n}{sys}\PY{o}{.}\PY{n}{argv}\PY{p}{)}
+        
+        \PY{k+kn}{from} \PY{n+nn}{petsc4py} \PY{k+kn}{import} \PY{n}{PETSc}
+        
+        \PY{k}{class} \PY{n+nc}{Poisson2D}\PY{p}{(}\PY{n+nb}{object}\PY{p}{)}\PY{p}{:}
+        
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{da}\PY{p}{)}\PY{p}{:}
+                \PY{k}{assert} \PY{n}{da}\PY{o}{.}\PY{n}{getDim}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{2}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da} \PY{o}{=} \PY{n}{da}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{localX}  \PY{o}{=} \PY{n}{da}\PY{o}{.}\PY{n}{createLocalVec}\PY{p}{(}\PY{p}{)}
+        
+            \PY{k}{def} \PY{n+nf}{formRHS}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{B}\PY{p}{)}\PY{p}{:}
+                \PY{n}{b} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getVecArray}\PY{p}{(}\PY{n}{B}\PY{p}{)}
+                \PY{n}{mx}\PY{p}{,} \PY{n}{my} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getSizes}\PY{p}{(}\PY{p}{)}
+                \PY{n}{hx}\PY{p}{,} \PY{n}{hy} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{o}{/}\PY{n}{m} \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{p}{[}\PY{n}{mx}\PY{p}{,} \PY{n}{my}\PY{p}{]}\PY{p}{]}
+                \PY{p}{(}\PY{n}{xs}\PY{p}{,} \PY{n}{xe}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{ys}\PY{p}{,} \PY{n}{ye}\PY{p}{)} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getRanges}\PY{p}{(}\PY{p}{)}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{ys}\PY{p}{,} \PY{n}{ye}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{xs}\PY{p}{,} \PY{n}{xe}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{b}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}\PY{o}{*}\PY{n}{hx}\PY{o}{*}\PY{n}{hy}
+        
+            \PY{k}{def} \PY{n+nf}{mult}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{mat}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{)}\PY{p}{:}
+                \PY{c}{\PYZsh{}}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{globalToLocal}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{localX}\PY{p}{)}
+                \PY{n}{x} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getVecArray}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{localX}\PY{p}{)}
+                \PY{n}{y} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getVecArray}\PY{p}{(}\PY{n}{Y}\PY{p}{)}
+                \PY{c}{\PYZsh{}}
+                \PY{n}{mx}\PY{p}{,} \PY{n}{my} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getSizes}\PY{p}{(}\PY{p}{)}
+                \PY{n}{hx}\PY{p}{,} \PY{n}{hy} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{o}{/}\PY{n}{m} \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{p}{[}\PY{n}{mx}\PY{p}{,} \PY{n}{my}\PY{p}{]}\PY{p}{]}
+                \PY{p}{(}\PY{n}{xs}\PY{p}{,} \PY{n}{xe}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{ys}\PY{p}{,} \PY{n}{ye}\PY{p}{)} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{da}\PY{o}{.}\PY{n}{getRanges}\PY{p}{(}\PY{p}{)}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{ys}\PY{p}{,} \PY{n}{ye}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{xs}\PY{p}{,} \PY{n}{xe}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{u} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{c}{\PYZsh{} center}
+                        \PY{n}{u\PYZus{}e} \PY{o}{=} \PY{n}{u\PYZus{}w} \PY{o}{=} \PY{n}{u\PYZus{}n} \PY{o}{=} \PY{n}{u\PYZus{}s} \PY{o}{=} \PY{l+m+mi}{0}
+                        \PY{k}{if} \PY{n}{i} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}    \PY{n}{u\PYZus{}w} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{c}{\PYZsh{} west}
+                        \PY{k}{if} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{mx}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{n}{u\PYZus{}e} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{c}{\PYZsh{} east}
+                        \PY{k}{if} \PY{n}{j} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}    \PY{n}{u\PYZus{}s} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{c}{\PYZsh{} south}
+                        \PY{k}{if} \PY{n}{j} \PY{o}{\PYZlt{}} \PY{n}{ny}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{n}{u\PYZus{}n} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]} \PY{c}{\PYZsh{} north}
+                        \PY{n}{u\PYZus{}xx} \PY{o}{=} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{u\PYZus{}e} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{u} \PY{o}{\PYZhy{}} \PY{n}{u\PYZus{}w}\PY{p}{)}\PY{o}{*}\PY{n}{hy}\PY{o}{/}\PY{n}{hx}
+                        \PY{n}{u\PYZus{}yy} \PY{o}{=} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{u\PYZus{}n} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{u} \PY{o}{\PYZhy{}} \PY{n}{u\PYZus{}s}\PY{p}{)}\PY{o}{*}\PY{n}{hx}\PY{o}{/}\PY{n}{hy}
+                        \PY{n}{y}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{u\PYZus{}xx} \PY{o}{+} \PY{n}{u\PYZus{}yy}
+        
+        \PY{n}{OptDB} \PY{o}{=} \PY{n}{PETSc}\PY{o}{.}\PY{n}{Options}\PY{p}{(}\PY{p}{)}
+        
+        \PY{c}{\PYZsh{} change nx and ny if you want}
+        \PY{n}{n}  \PY{o}{=} \PY{n}{OptDB}\PY{o}{.}\PY{n}{getInt}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{n}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{)}
+        \PY{n}{nx} \PY{o}{=} \PY{n}{OptDB}\PY{o}{.}\PY{n}{getInt}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{nx}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+        \PY{n}{ny} \PY{o}{=} \PY{n}{OptDB}\PY{o}{.}\PY{n}{getInt}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{ny}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+        
+        \PY{n}{da} \PY{o}{=} \PY{n}{PETSc}\PY{o}{.}\PY{n}{DA}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{create}\PY{p}{(}\PY{p}{[}\PY{n}{nx}\PY{p}{,} \PY{n}{ny}\PY{p}{]}\PY{p}{,} \PY{n}{stencil\PYZus{}width}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{pde} \PY{o}{=} \PY{n}{Poisson2D}\PY{p}{(}\PY{n}{da}\PY{p}{)}
+        
+        \PY{n}{x} \PY{o}{=} \PY{n}{da}\PY{o}{.}\PY{n}{createGlobalVec}\PY{p}{(}\PY{p}{)}
+        \PY{n}{b} \PY{o}{=} \PY{n}{da}\PY{o}{.}\PY{n}{createGlobalVec}\PY{p}{(}\PY{p}{)}
+        \PY{c}{\PYZsh{} A = da.createMat(\PYZsq{}python\PYZsq{})}
+        \PY{n}{A} \PY{o}{=} \PY{n}{PETSc}\PY{o}{.}\PY{n}{Mat}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{createPython}\PY{p}{(}
+            \PY{p}{[}\PY{n}{x}\PY{o}{.}\PY{n}{getSizes}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{b}\PY{o}{.}\PY{n}{getSizes}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{comm}\PY{o}{=}\PY{n}{da}\PY{o}{.}\PY{n}{comm}\PY{p}{)}
+        \PY{n}{A}\PY{o}{.}\PY{n}{setPythonContext}\PY{p}{(}\PY{n}{pde}\PY{p}{)}
+        \PY{n}{A}\PY{o}{.}\PY{n}{setUp}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{ksp} \PY{o}{=} \PY{n}{PETSc}\PY{o}{.}\PY{n}{KSP}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{create}\PY{p}{(}\PY{p}{)}
+        \PY{n}{ksp}\PY{o}{.}\PY{n}{setOperators}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+        \PY{n}{ksp}\PY{o}{.}\PY{n}{setType}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{cg}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{pc} \PY{o}{=} \PY{n}{ksp}\PY{o}{.}\PY{n}{getPC}\PY{p}{(}\PY{p}{)}
+        \PY{n}{pc}\PY{o}{.}\PY{n}{setType}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{none}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{ksp}\PY{o}{.}\PY{n}{setFromOptions}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{pde}\PY{o}{.}\PY{n}{formRHS}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+        \PY{n}{ksp}\PY{o}{.}\PY{n}{solve}\PY{p}{(}\PY{n}{b}\PY{p}{,} \PY{n}{x}\PY{p}{)}
+        
+        \PY{n}{u} \PY{o}{=} \PY{n}{da}\PY{o}{.}\PY{n}{createNaturalVec}\PY{p}{(}\PY{p}{)}
+        \PY{n}{da}\PY{o}{.}\PY{n}{globalToNatural}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{u}\PY{p}{)}
+        \PY{n}{x}\PY{o}{.}\PY{n}{getSizes}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{engine\PYZus{}arrays} \PY{o}{=} \PY{n}{u}\PY{o}{.}\PY{n}{array}
+        \PY{n}{rank}\PY{o}{=}\PY{n}{da}\PY{o}{.}\PY{n}{comm}\PY{o}{.}\PY{n}{rank}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c}{\PYZsh{} now disable the parallel run to get the d}
+        \PY{o}{\PYZpc{}}\PY{k}{autopx}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\%autopx disabled
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c}{\PYZsh{} view the engine arrays and ranks}
+        \PY{n}{arrays} \PY{o}{=} \PY{n}{view}\PY{p}{[}\PY{l+s}{\PYZsq{}}\PY{l+s}{engine\PYZus{}arrays}\PY{l+s}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{ranks} \PY{o}{=} \PY{n}{view}\PY{p}{[}\PY{l+s}{\PYZsq{}}\PY{l+s}{rank}\PY{l+s}{\PYZsq{}}\PY{p}{]}
+        \PY{c}{\PYZsh{} Sort the arrays based on rank}
+        \PY{n}{arrays\PYZus{}and\PYZus{}ranks} \PY{o}{=} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{ranks}\PY{p}{,} \PY{n}{arrays}\PY{p}{)}
+        \PY{n}{arrays\PYZus{}and\PYZus{}ranks}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+        \PY{n}{sorted\PYZus{}ranks}\PY{p}{,}\PY{n}{sorted\PYZus{}arrays} \PY{o}{=} \PY{n+nb}{zip}\PY{p}{(}\PY{o}{*}\PY{n}{arrays\PYZus{}and\PYZus{}ranks}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c}{\PYZsh{} Create a list to use with concatenate}
+        \PY{n}{list\PYZus{}arrays}\PY{o}{=}\PY{n+nb}{list}\PY{p}{(}\PY{n}{sorted\PYZus{}arrays}\PY{p}{)}
+        \PY{c}{\PYZsh{} Concatenate the ordered list of arrays into one flat array}
+        \PY{n}{u\PYZus{}flat} \PY{o}{=} \PY{n}{concatenate}\PY{p}{(}\PY{n}{list\PYZus{}arrays}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c}{\PYZsh{} Get the global sizes nx and ny}
+        \PY{n}{nx}\PY{o}{=}\PY{n}{view}\PY{p}{[}\PY{l+s}{\PYZsq{}}\PY{l+s}{nx}\PY{l+s}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+        \PY{n}{ny}\PY{o}{=}\PY{n}{view}\PY{p}{[}\PY{l+s}{\PYZsq{}}\PY{l+s}{ny}\PY{l+s}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+        
+        \PY{c}{\PYZsh{} create a mesh grid}
+        \PY{n}{X}\PY{p}{,} \PY{n}{Y} \PY{o}{=}  \PY{n}{mgrid}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{1j}\PY{o}{*}\PY{n}{nx}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{1j}\PY{o}{*}\PY{n}{ny}\PY{p}{]}
+        \PY{c}{\PYZsh{} reshape the solution, orderering is Fortran based}
+        \PY{n}{u} \PY{o}{=} \PY{n}{u\PYZus{}flat}\PY{p}{[}\PY{o}{.}\PY{o}{.}\PY{o}{.}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{nx}\PY{p}{,}\PY{n}{ny}\PY{p}{,} \PY{n}{order}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{F}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{c}{\PYZsh{} Let\PYZsq{}s plot}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{contourf}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{,}\PY{n}{u}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{Y}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{.k}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{equal}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{p}{)}
+        \PY{n}{pylab}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Appendix_02_PETSc4Py_files/Appendix_02_PETSc4Py_21_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

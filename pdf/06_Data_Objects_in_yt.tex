@@ -1,0 +1,482 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass{article}
+
+    
+    
+    \usepackage{graphicx} % Used to insert images
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{color} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    
+
+    
+    
+    \definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+    \definecolor{darkorange}{rgb}{.71,0.21,0.01}
+    \definecolor{darkgreen}{rgb}{.12,.54,.11}
+    \definecolor{myteal}{rgb}{.26, .44, .56}
+    \definecolor{gray}{gray}{0.45}
+    \definecolor{lightgray}{gray}{.95}
+    \definecolor{mediumgray}{gray}{.8}
+    \definecolor{inputbackground}{rgb}{.95, .95, .85}
+    \definecolor{outputbackground}{rgb}{.95, .95, .95}
+    \definecolor{traceback}{rgb}{1, .95, .95}
+    % ansi colors
+    \definecolor{red}{rgb}{.6,0,0}
+    \definecolor{green}{rgb}{0,.65,0}
+    \definecolor{brown}{rgb}{0.6,0.6,0}
+    \definecolor{blue}{rgb}{0,.145,.698}
+    \definecolor{purple}{rgb}{.698,.145,.698}
+    \definecolor{cyan}{rgb}{0,.698,.698}
+    \definecolor{lightgray}{gray}{0.5}
+    
+    % bright ansi colors
+    \definecolor{darkgray}{gray}{0.25}
+    \definecolor{lightred}{rgb}{1.0,0.39,0.28}
+    \definecolor{lightgreen}{rgb}{0.48,0.99,0.0}
+    \definecolor{lightblue}{rgb}{0.53,0.81,0.92}
+    \definecolor{lightpurple}{rgb}{0.87,0.63,0.87}
+    \definecolor{lightcyan}{rgb}{0.5,1.0,0.83}
+    
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{06\_Data\_Objects\_in\_yt}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=blue,
+      linkcolor=darkorange,
+      citecolor=darkgreen,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Data Objects and Time Series
+Data}\label{data-objects-and-time-series-data}
+
+Just like before, we will load up yt. Since we'll be using pylab to plot
+some data in this notebook, we additionally tell matplotlib to place
+plots inline inside the notebook.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} \PY{n}{inline}
+       \PY{k+kn}{import} \PY{n+nn}{yt}
+       \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+       \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k+kn}{import} \PY{n}{pylab}
+       \PY{k+kn}{from} \PY{n+nn}{yt.analysis\PYZus{}modules.halo\PYZus{}finding.api} \PY{k+kn}{import} \PY{n}{HaloFinder}
+\end{Verbatim}
+
+    \subsection{Time Series Data}\label{time-series-data}
+
+Unlike before, instead of loading a single dataset, this time we'll load
+a bunch which we'll examine in sequence. This command creates a
+\texttt{DatasetSeries} object, which can be iterated over (including in
+parallel, which is outside the scope of this quickstart) and analyzed.
+There are some other helpful operations it can provide, but we'll stick
+to the basics here.
+
+Note that you can specify either a list of filenames, or a glob (i.e.,
+asterisk) pattern in this.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{ts} \PY{o}{=} \PY{n}{yt}\PY{o}{.}\PY{n}{DatasetSeries}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{enzo\PYZus{}tiny\PYZus{}cosmology/*/*.hierarchy}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \subsubsection{Example 1: Simple Time
+Series}\label{example-1-simple-time-series}
+
+As a simple example of how we can use this functionality, let's find the
+min and max of the density as a function of time in this simulation. To
+do this we use the construction \texttt{for ds in ts} where \texttt{ds}
+means ``Dataset'' and \texttt{ts} is the ``Time Series'' we just loaded
+up. For each dataset, we'll create an object (\texttt{dd}) that covers
+the entire domain. (\texttt{all\_data} is a shorthand function for
+this.) We'll then call the \texttt{extrema} Derived Quantity, and append
+the min and max to our extrema outputs.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{rho\PYZus{}ex} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+       \PY{n}{times} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+       \PY{k}{for} \PY{n}{ds} \PY{o+ow}{in} \PY{n}{ts}\PY{p}{:}
+           \PY{n}{dd} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{all\PYZus{}data}\PY{p}{(}\PY{p}{)}
+           \PY{n}{rho\PYZus{}ex}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{dd}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{extrema}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+           \PY{n}{times}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{ds}\PY{o}{.}\PY{n}{current\PYZus{}time}\PY{o}{.}\PY{n}{in\PYZus{}units}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Gyr}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+       \PY{n}{rho\PYZus{}ex} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{rho\PYZus{}ex}\PY{p}{)}
+\end{Verbatim}
+
+    Now we plot the minimum and the maximum:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{pylab}\PY{o}{.}\PY{n}{semilogy}\PY{p}{(}\PY{n}{times}\PY{p}{,} \PY{n}{rho\PYZus{}ex}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZhy{}xk}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{Minimum}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{semilogy}\PY{p}{(}\PY{n}{times}\PY{p}{,} \PY{n}{rho\PYZus{}ex}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZhy{}xr}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{Maximum}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Density (\PYZdl{}g/cm\PYZca{}3\PYZdl{})}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Time (Gyr)}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{l+m+mf}{1e\PYZhy{}32}\PY{p}{,} \PY{l+m+mf}{1e\PYZhy{}21}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \subsubsection{Example 2: Advanced Time
+Series}\label{example-2-advanced-time-series}
+
+Let's do something a bit different. Let's calculate the total mass
+inside halos and outside halos.
+
+This actually touches a lot of different pieces of machinery in yt. For
+every dataset, we will run the halo finder HOP. Then, we calculate the
+total mass in the domain. Then, for each halo, we calculate the sum of
+the baryon mass in that halo. We'll keep running tallies of these two
+things.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{k+kn}{from} \PY{n+nn}{yt.units} \PY{k+kn}{import} \PY{n}{Msun}
+       
+       \PY{n}{mass} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+       \PY{n}{zs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+       \PY{k}{for} \PY{n}{ds} \PY{o+ow}{in} \PY{n}{ts}\PY{p}{:}
+           \PY{n}{halos} \PY{o}{=} \PY{n}{HaloFinder}\PY{p}{(}\PY{n}{ds}\PY{p}{)}
+           \PY{n}{dd} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{all\PYZus{}data}\PY{p}{(}\PY{p}{)}
+           \PY{n}{total\PYZus{}mass} \PY{o}{=} \PY{n}{dd}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{total\PYZus{}quantity}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{cell\PYZus{}mass}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{in\PYZus{}units}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Msun}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+           \PY{n}{total\PYZus{}in\PYZus{}baryons} \PY{o}{=} \PY{l+m+mf}{0.0}\PY{o}{*}\PY{n}{Msun}
+           \PY{k}{for} \PY{n}{halo} \PY{o+ow}{in} \PY{n}{halos}\PY{p}{:}
+               \PY{n}{sp} \PY{o}{=} \PY{n}{halo}\PY{o}{.}\PY{n}{get\PYZus{}sphere}\PY{p}{(}\PY{p}{)}
+               \PY{n}{total\PYZus{}in\PYZus{}baryons} \PY{o}{+}\PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{total\PYZus{}quantity}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{cell\PYZus{}mass}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{in\PYZus{}units}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Msun}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+           \PY{n}{mass}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{total\PYZus{}in\PYZus{}baryons}\PY{o}{/}\PY{n}{total\PYZus{}mass}\PY{p}{)}
+           \PY{n}{zs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{ds}\PY{o}{.}\PY{n}{current\PYZus{}redshift}\PY{p}{)}
+\end{Verbatim}
+
+    Now let's plot them!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{pylab}\PY{o}{.}\PY{n}{semilogx}\PY{p}{(}\PY{n}{zs}\PY{p}{,} \PY{n}{mass}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZhy{}xb}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Redshift}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Mass in halos / Total mass}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{zs}\PY{p}{)}\PY{p}{,} \PY{n+nb}{min}\PY{p}{(}\PY{n}{zs}\PY{p}{)}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{o}{.}\PY{l+m+mi}{18}\PY{p}{)}
+\end{Verbatim}
+
+    \subsection{Data Objects}\label{data-objects}
+
+Time series data have many applications, but most of them rely on
+examining the underlying data in some way. Below, we'll see how to use
+and manipulate data objects.
+
+\subsubsection{Ray Queries}\label{ray-queries}
+
+yt provides the ability to examine rays, or lines, through the domain.
+Note that these are not periodic, unlike most other data objects. We
+create a ray object and can then examine quantities of it. Rays have the
+special fields \texttt{t} and \texttt{dts}, which correspond to the time
+the ray enters a given cell and the distance it travels through that
+cell.
+
+To create a ray, we specify the start and end points.
+
+Note that we need to convert these arrays to numpy arrays due to a bug
+in matplotlib 1.3.1.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{ray} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{ray}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mf}{0.2}\PY{p}{,} \PY{l+m+mf}{0.3}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.9}\PY{p}{,} \PY{l+m+mf}{0.8}\PY{p}{,} \PY{l+m+mf}{0.7}\PY{p}{]}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{semilogy}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{ray}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{t}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{ray}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{k}{print} \PY{n}{ray}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{dts}\PY{l+s}{\PYZdq{}}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{k}{print} \PY{n}{ray}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{t}\PY{l+s}{\PYZdq{}}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{k}{print} \PY{n}{ray}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{x}\PY{l+s}{\PYZdq{}}\PY{p}{]}
+\end{Verbatim}
+
+    \subsubsection{Slice Queries}\label{slice-queries}
+
+While slices are often used for visualization, they can be useful for
+other operations as well. yt regards slices as multi-resolution objects.
+They are an array of cells that are not all the same size; it only
+returns the cells at the highest resolution that it intersects. (This is
+true for all yt data objects.) Slices and projections have the special
+fields \texttt{px}, \texttt{py}, \texttt{pdx} and \texttt{pdy}, which
+correspond to the coordinates and half-widths in the pixel plane.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{ds} \PY{o}{=} \PY{n}{yt}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{IsolatedGalaxy/galaxy0030/galaxy0030}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{n}{v}\PY{p}{,} \PY{n}{c} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{find\PYZus{}max}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{n}{sl} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{slice}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{c}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+       \PY{k}{print} \PY{n}{sl}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{index}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{x}\PY{l+s}{\PYZdq{}}\PY{p}{]}
+       \PY{k}{print} \PY{n}{sl}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{index}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{z}\PY{l+s}{\PYZdq{}}\PY{p}{]}
+       \PY{k}{print} \PY{n}{sl}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{pdx}\PY{l+s}{\PYZdq{}}\PY{p}{]}
+       \PY{k}{print} \PY{n}{sl}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{gas}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+    If we want to do something interesting with a \texttt{Slice}, we can
+turn it into a \texttt{FixedResolutionBuffer}. This object can be
+queried and will return a 2D array of values.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{frb} \PY{o}{=} \PY{n}{sl}\PY{o}{.}\PY{n}{to\PYZus{}frb}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{50.0}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{kpc}\PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1024}\PY{p}{)}
+       \PY{k}{print} \PY{n}{frb}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{gas}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+    yt provides a few functions for writing arrays to disk, particularly in
+image form. Here we'll write out the log of \texttt{density}, and then
+use IPython to display it back here. Note that for the most part, you
+will probably want to use a \texttt{PlotWindow} for this, but in the
+case that it is useful you can directly manipulate the data.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{yt}\PY{o}{.}\PY{n}{write\PYZus{}image}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log10}\PY{p}{(}\PY{n}{frb}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{gas}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{temp.png}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{k+kn}{from} \PY{n+nn}{IPython.display} \PY{k+kn}{import} \PY{n}{Image}
+       \PY{n}{Image}\PY{p}{(}\PY{n}{filename} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{temp.png}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \subsubsection{Off-Axis Slices}\label{off-axis-slices}
+
+yt provides not only slices, but off-axis slices that are sometimes
+called ``cutting planes.'' These are specified by (in order) a normal
+vector and a center. Here we've set the normal vector to
+\texttt{{[}0.2, 0.3, 0.5{]}} and the center to be the point of maximum
+density.
+
+We can then turn these directly into plot windows using \texttt{to\_pw}.
+Note that the \texttt{to\_pw} and \texttt{to\_frb} methods are available
+on slices, off-axis slices, and projections, and can be used on any of
+them.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{cp} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{cutting}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{l+m+mf}{0.3}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{]}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{max}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{n}{pw} \PY{o}{=} \PY{n}{cp}\PY{o}{.}\PY{n}{to\PYZus{}pw}\PY{p}{(}\PY{n}{fields} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{gas}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    Once we have our plot window from our cutting plane, we can show it
+here.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{pw}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    We can, as noted above, do the same with our slice:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{pws} \PY{o}{=} \PY{n}{sl}\PY{o}{.}\PY{n}{to\PYZus{}pw}\PY{p}{(}\PY{n}{fields}\PY{o}{=}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+       \PY{c}{\PYZsh{}pws.show()}
+       \PY{k}{print} \PY{n}{pws}\PY{o}{.}\PY{n}{plots}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \subsubsection{Covering Grids}\label{covering-grids}
+
+If we want to access a 3D array of data that spans multiple resolutions
+in our simulation, we can use a covering grid. This will return a 3D
+array of data, drawing from up to the resolution level specified when
+creating the data. For example, if you create a covering grid that spans
+two child grids of a single parent grid, it will fill those zones
+covered by a zone of a child grid with the data from that child grid.
+Where it is covered only by the parent grid, the cells from the parent
+grid will be duplicated (appropriately) to fill the covering grid.
+
+There are two different types of covering grids: unsmoothed and
+smoothed. Smoothed grids will be filled through a cascading
+interpolation process; they will be filled at level 0, interpolated to
+level 1, filled at level 1, interpolated to level 2, filled at level 2,
+etc. This will help to reduce edge effects. Unsmoothed covering grids
+will not be interpolated, but rather values will be duplicated multiple
+times.
+
+Here we create an unsmoothed covering grid at level 2, with the left
+edge at \texttt{{[}0.0, 0.0, 0.0{]}} and with dimensions equal to those
+that would cover the entire domain at level 2. We can then ask for the
+Density field, which will be a 3D array.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{cg} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{covering\PYZus{}grid}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{]}\PY{p}{,} \PY{n}{ds}\PY{o}{.}\PY{n}{domain\PYZus{}dimensions} \PY{o}{*} \PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+       \PY{k}{print} \PY{n}{cg}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+    In this example, we do exactly the same thing: except we ask for a
+\emph{smoothed} covering grid, which will reduce edge effects.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{scg} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{smoothed\PYZus{}covering\PYZus{}grid}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{]}\PY{p}{,} \PY{n}{ds}\PY{o}{.}\PY{n}{domain\PYZus{}dimensions} \PY{o}{*} \PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+       \PY{k}{print} \PY{n}{scg}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

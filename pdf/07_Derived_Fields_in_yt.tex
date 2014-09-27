@@ -1,0 +1,392 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass{article}
+
+    
+    
+    \usepackage{graphicx} % Used to insert images
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{color} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    
+
+    
+    
+    \definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+    \definecolor{darkorange}{rgb}{.71,0.21,0.01}
+    \definecolor{darkgreen}{rgb}{.12,.54,.11}
+    \definecolor{myteal}{rgb}{.26, .44, .56}
+    \definecolor{gray}{gray}{0.45}
+    \definecolor{lightgray}{gray}{.95}
+    \definecolor{mediumgray}{gray}{.8}
+    \definecolor{inputbackground}{rgb}{.95, .95, .85}
+    \definecolor{outputbackground}{rgb}{.95, .95, .95}
+    \definecolor{traceback}{rgb}{1, .95, .95}
+    % ansi colors
+    \definecolor{red}{rgb}{.6,0,0}
+    \definecolor{green}{rgb}{0,.65,0}
+    \definecolor{brown}{rgb}{0.6,0.6,0}
+    \definecolor{blue}{rgb}{0,.145,.698}
+    \definecolor{purple}{rgb}{.698,.145,.698}
+    \definecolor{cyan}{rgb}{0,.698,.698}
+    \definecolor{lightgray}{gray}{0.5}
+    
+    % bright ansi colors
+    \definecolor{darkgray}{gray}{0.25}
+    \definecolor{lightred}{rgb}{1.0,0.39,0.28}
+    \definecolor{lightgreen}{rgb}{0.48,0.99,0.0}
+    \definecolor{lightblue}{rgb}{0.53,0.81,0.92}
+    \definecolor{lightpurple}{rgb}{0.87,0.63,0.87}
+    \definecolor{lightcyan}{rgb}{0.5,1.0,0.83}
+    
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{07\_Derived\_Fields\_in\_yt}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=blue,
+      linkcolor=darkorange,
+      citecolor=darkgreen,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Derived Fields and Profiles}\label{derived-fields-and-profiles}
+
+One of the most powerful features in yt is the ability to create derived
+fields that act and look exactly like fields that exist on disk. This
+means that they will be generated on demand and can be used anywhere a
+field that exists on disk would be used. Additionally, you can create
+them by just writing python functions.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} \PY{n}{inline}
+       \PY{k+kn}{import} \PY{n+nn}{yt}
+       \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+       \PY{k+kn}{from} \PY{n+nn}{yt} \PY{k+kn}{import} \PY{n}{derived\PYZus{}field}
+       \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k+kn}{import} \PY{n}{pylab}
+\end{Verbatim}
+
+    \subsection{Derived Fields}\label{derived-fields}
+
+This is an example of the simplest possible way to create a derived
+field. All derived fields are defined by a function and some metadata;
+that metadata can include units, LaTeX-friendly names, conversion
+factors, and so on. Fields can be defined in the way in the next cell.
+What this does is create a function which accepts two arguments and then
+provide the units for that field. In this case, our field is
+\texttt{dinosaurs} and our units are \texttt{K*cm/s}. The function
+itself can access any fields that are in the simulation, and it does so
+by requesting data from the object called \texttt{data}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n+nd}{@derived\PYZus{}field}\PY{p}{(}\PY{n}{name} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{dinosaurs}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{n}{units} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{K * cm/s}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{k}{def} \PY{n+nf}{\PYZus{}dinos}\PY{p}{(}\PY{n}{field}\PY{p}{,} \PY{n}{data}\PY{p}{)}\PY{p}{:}
+           \PY{k}{return} \PY{n}{data}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{temperature}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{o}{*} \PY{n}{data}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{velocity\PYZus{}magnitude}\PY{l+s}{\PYZdq{}}\PY{p}{]}
+\end{Verbatim}
+
+    One important thing to note is that derived fields must be defined
+\emph{before} any datasets are loaded. Let's load up our data and take a
+look at some quantities.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{ds} \PY{o}{=} \PY{n}{yt}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{IsolatedGalaxy/galaxy0030/galaxy0030}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{n}{dd} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{all\PYZus{}data}\PY{p}{(}\PY{p}{)}
+       \PY{k}{print} \PY{n}{dd}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    One interesting question is, what are the minimum and maximum values of
+dinosaur production rates in our isolated galaxy? We can do that by
+examining the \texttt{extrema} quantity -- the exact same way that we
+would for density, temperature, and so on.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{k}{print} \PY{n}{dd}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{extrema}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{dinosaurs}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    We can do the same for the average quantities as well.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{k}{print} \PY{n}{dd}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{weighted\PYZus{}average\PYZus{}quantity}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{dinosaurs}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{n}{weight}\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{temperature}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \subsection{A Few Other Quantities}\label{a-few-other-quantities}
+
+We can ask other quantities of our data, as well. For instance, this
+sequence of operations will find the most dense point, center a sphere
+on it, calculate the bulk velocity of that sphere, calculate the
+baryonic angular momentum vector, and then the density extrema. All of
+this is done in a memory conservative way: if you have an absolutely
+enormous dataset, yt will split that dataset into pieces, apply
+intermediate reductions and then a final reduction to calculate your
+quantity.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{sp} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{sphere}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{max}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{p}{(}\PY{l+m+mf}{10.0}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{kpc}\PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+       \PY{n}{bv} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{bulk\PYZus{}velocity}\PY{p}{(}\PY{p}{)}
+       \PY{n}{L} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{angular\PYZus{}momentum\PYZus{}vector}\PY{p}{(}\PY{p}{)}
+       \PY{n}{rho\PYZus{}min}\PY{p}{,} \PY{n}{rho\PYZus{}max} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{extrema}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{k}{print} \PY{n}{bv}
+       \PY{k}{print} \PY{n}{L}
+       \PY{k}{print} \PY{n}{rho\PYZus{}min}\PY{p}{,} \PY{n}{rho\PYZus{}max}
+\end{Verbatim}
+
+    \subsection{Profiles}\label{profiles}
+
+yt provides the ability to bin in 1, 2 and 3 dimensions. This means
+discretizing in one or more dimensions of phase space (density,
+temperature, etc) and then calculating either the total value of a field
+in each bin or the average value of a field in each bin.
+
+We do this using the objects \texttt{Profile1D}, \texttt{Profile2D}, and
+\texttt{Profile3D}. The first two are the most common since they are the
+easiest to visualize.
+
+This first set of commands manually creates a profile object the sphere
+we created earlier, binned in 32 bins according to density between
+\texttt{rho\_min} and \texttt{rho\_max}, and then takes the
+density-weighted average of the fields \texttt{temperature} and
+(previously-defined) \texttt{dinosaurs}. We then plot it in a loglog
+plot.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{prof} \PY{o}{=} \PY{n}{yt}\PY{o}{.}\PY{n}{Profile1D}\PY{p}{(}\PY{n}{sp}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{n}{rho\PYZus{}min}\PY{p}{,} \PY{n}{rho\PYZus{}max}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{,} \PY{n}{weight\PYZus{}field}\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{cell\PYZus{}mass}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{n}{prof}\PY{o}{.}\PY{n}{add\PYZus{}fields}\PY{p}{(}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{temperature}\PY{l+s}{\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{dinosaurs}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{loglog}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{prof}\PY{o}{.}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{prof}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{temperature}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZhy{}x}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Density \PYZdl{}(g/cm\PYZca{}3)\PYZdl{}}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Temperature \PYZdl{}(K)\PYZdl{}}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+    Now we plot the \texttt{dinosaurs} field.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{pylab}\PY{o}{.}\PY{n}{loglog}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{prof}\PY{o}{.}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{prof}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{dinosaurs}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZhy{}x}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Density \PYZdl{}(g/cm\PYZca{}3)\PYZdl{}}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Dinosaurs \PYZdl{}(K cm / s)\PYZdl{}}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+    If we want to see the total mass in every bin, we profile the
+\texttt{cell\_mass} field with no weight. Specifying
+\texttt{weight=None} will simply take the total value in every bin and
+add that up.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{prof} \PY{o}{=} \PY{n}{yt}\PY{o}{.}\PY{n}{Profile1D}\PY{p}{(}\PY{n}{sp}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{n}{rho\PYZus{}min}\PY{p}{,} \PY{n}{rho\PYZus{}max}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{,} \PY{n}{weight\PYZus{}field}\PY{o}{=}\PY{n+nb+bp}{None}\PY{p}{)}
+       \PY{n}{prof}\PY{o}{.}\PY{n}{add\PYZus{}fields}\PY{p}{(}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{cell\PYZus{}mass}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{loglog}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{prof}\PY{o}{.}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{prof}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{cell\PYZus{}mass}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{in\PYZus{}units}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Msun}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZhy{}x}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Density \PYZdl{}(g/cm\PYZca{}3)\PYZdl{}}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+       \PY{n}{pylab}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Cell mass \PYZdl{}(M\PYZus{}}\PY{l+s}{\PYZbs{}}\PY{l+s}{odot)\PYZdl{}}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+    In addition to the low-level \texttt{ProfileND} interface, it's also
+quite straightforward to quickly create plots of profiles using the
+\texttt{ProfilePlot} class. Let's redo the last plot using
+\texttt{ProfilePlot}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{prof} \PY{o}{=} \PY{n}{yt}\PY{o}{.}\PY{n}{ProfilePlot}\PY{p}{(}\PY{n}{sp}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{density}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{cell\PYZus{}mass}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{weight\PYZus{}field}\PY{o}{=}\PY{n+nb+bp}{None}\PY{p}{)}
+       \PY{n}{prof}\PY{o}{.}\PY{n}{set\PYZus{}unit}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{cell\PYZus{}mass}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{Msun}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+       \PY{n}{prof}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \subsection{Field Parameters}\label{field-parameters}
+
+Field parameters are a method of passing information to derived fields.
+For instance, you might pass in information about a vector you want to
+use as a basis for a coordinate transformation. yt often uses things
+like \texttt{bulk\_velocity} to identify velocities that should be
+subtracted off. Here we show how that works:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{sp\PYZus{}small} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{sphere}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{max}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{p}{(}\PY{l+m+mf}{50.0}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{kpc}\PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+       \PY{n}{bv} \PY{o}{=} \PY{n}{sp\PYZus{}small}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{bulk\PYZus{}velocity}\PY{p}{(}\PY{p}{)}
+       
+       \PY{n}{sp} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{sphere}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{max}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{p}{(}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{Mpc}\PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+       \PY{n}{rv1} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{extrema}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{radial\PYZus{}velocity}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       
+       \PY{n}{sp}\PY{o}{.}\PY{n}{clear\PYZus{}data}\PY{p}{(}\PY{p}{)}
+       \PY{n}{sp}\PY{o}{.}\PY{n}{set\PYZus{}field\PYZus{}parameter}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{bulk\PYZus{}velocity}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{n}{bv}\PY{p}{)}
+       \PY{n}{rv2} \PY{o}{=} \PY{n}{sp}\PY{o}{.}\PY{n}{quantities}\PY{o}{.}\PY{n}{extrema}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{radial\PYZus{}velocity}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+       
+       \PY{k}{print} \PY{n}{bv}
+       \PY{k}{print} \PY{n}{rv1}
+       \PY{k}{print} \PY{n}{rv2}
+\end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

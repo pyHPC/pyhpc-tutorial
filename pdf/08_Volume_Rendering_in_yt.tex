@@ -90,7 +90,7 @@
     \def\gt{>}
     \def\lt{<}
     % Document parameters
-    \title{Appendix\_01\_Resources}
+    \title{08\_Volume\_Rendering\_in\_yt}
     
     
     
@@ -222,238 +222,57 @@
     
 
     
-    \section{Appendix 1: Resources}\label{appendix-1-resources}
+    \section{A Brief Demo of Volume
+Rendering}\label{a-brief-demo-of-volume-rendering}
 
-\section{Python in HPC}\label{python-in-hpc}
+This shows a small amount of volume rendering. Really, just enough to
+get your feet wet!
 
-Author: Andy Terrel
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{k+kn}{import} \PY{n+nn}{yt}
+       \PY{n}{ds} \PY{o}{=} \PY{n}{yt}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{IsolatedGalaxy/galaxy0030/galaxy0030}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
 
-\href{http://creativecommons.org/licenses/by/3.0/deed.en_US}{\includegraphics{../figures/creative_commons_logo.png}}
+    To create a volume rendering, we need a camera and a transfer function.
+We'll use the \texttt{ColorTransferFunction}, which accepts (in log
+space) the minimum and maximum bounds of our transfer function. This
+means behavior for data outside these values is undefined.
 
+We then add on ``layers'' like an onion. This function can accept a
+width (here specified) in data units, and also a color map. Here we add
+on four layers.
 
-    \begin{center}\rule{3in}{0.4pt}\end{center}
+Finally, we create a camera. The focal point is
+\texttt{{[}0.5, 0.5, 0.5{]}}, the width is 20 kpc (including
+front-to-back integration) and we specify a transfer function. Once
+we've done that, we call \texttt{show} to actually cast our rays and
+display them inline.
 
-\subsection{Learning Python}\label{learning-python}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{tf} \PY{o}{=} \PY{n}{yt}\PY{o}{.}\PY{n}{ColorTransferFunction}\PY{p}{(}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{28}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{24}\PY{p}{)}\PY{p}{)}
+       \PY{n}{tf}\PY{o}{.}\PY{n}{add\PYZus{}layers}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{w}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{)}
+       \PY{n}{cam} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{camera}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{kpc}\PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{512}\PY{p}{,} \PY{n}{tf}\PY{p}{,} \PY{n}{fields}\PY{o}{=}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{density}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+       \PY{n}{cam}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
 
-There are a very large number of resources for learning the python
-language. The issue of course is finding a resource that is attractive
-to the correct mindset. Very often something that a programmer is able
-to learn from has little resonance with an artist. For this reason, I am
-going to list off a couple of places that I find particularly good, but
-of course I have been programming for over a decade.
+    If we want to apply a clipping, we can specify the \texttt{clip\_ratio}.
+This will clip the upper bounds to this value times the standard
+deviation of the values in the image array.
 
-While learning the language is important, the real value of Python is
-the numerous libraries and the community around the tools. With that
-said finding what your particular community is doing is pretty
-important, but there are a core set of tools that are used by most
-pythonistas. I list off a few of these tools for your consumption.
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{cam}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{n}{clip\PYZus{}ratio}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+\end{Verbatim}
 
-Also, because we like to see what people are doing with python, I list
-off a few shining examples of python in the wide world of scientific
-computing. I have to admit that there are a huge number of possibilities
-but few in the realm of HPC. At the very least, a HPC person should know
-Python for its scripting abilities but as the other sections of this
-document underscore, Python is a good candidate for HPC codes as well.
+    There are several other options we can specify. Note that here we have
+turned on the use of ghost zones, shortened the data interval for the
+transfer function, and widened our gaussian layers.
 
-\subsubsection{Python Tutorials}\label{python-tutorials}
-
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  \textbf{\href{http://docs.python.org/tutorial/}{Python Doc Tutorial}}:
-  This is the tutorial written by the developers of Python, best for
-  programmers.
-\item
-  \textbf{\href{http://www.greenteapress.com/thinkpython/}{Think
-  Python}}: A book for non-programmers.
-\end{itemize}
-
-\subsubsection{Python Tools}\label{python-tools}
-
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  \textbf{\href{http://www.enthought.com/products/epd.php}{Enthought
-  Python Distribution}}: A distribution of the most commonly used tools
-  by the community (free for academics).
-\item
-  \textbf{\href{http://numpy.scipy.org/}{NumPy}}: Fast array library for
-  Python.
-\item
-  \textbf{\href{http://scipy.org}{SciPy}}: A collection of scientific
-  libraries.
-\item
-  \textbf{\href{http://matplotlib.sourceforge.net/}{MatPlotLib}}: A
-  highly customizable 2D plotting library
-\item
-  \textbf{\href{http://ipython.org/}{IPython}}: An interactive Python
-  shell and parallel code manager. The IPython notebook has become very
-  popular and allows users to use an interface similar to Mathematica on
-  a supercomputer.
-\end{itemize}
-
-\subsubsection{Python Stories}\label{python-stories}
-
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  \textbf{\href{http://conference.scipy.org/}{SciPy Conferences}}: The
-  series of conferences associated with the scientific Python community
-  see recent videos at
-  \href{http://www.youtube.com/user/NextDayVideo/videos?flow=grid\&view=0}{Next
-  Day Video Youtube Channel} or \href{http://pyvideo.org}{PyVideo}.
-\item
-  \textbf{\href{http://www.youtube.com/watch?v=mLuIB8aW2KA\&feature=youtu.be}{Python
-  in Astronomy}}: Joshua Bloom from UC Berkeley gave a keynote talk at
-  SciPy 2012 on ``Python as Super Glue for the Modern Scientific
-  Workflow''
-\item
-  \textbf{\href{http://numfocus.org/user-stories/}{NumFocus User
-  Stories}}: A foundation for scientific computing tools with a growing
-  number of user stories.
-\item
-  \textbf{\href{http://numerics.kaust.edu.sa/papers/pyclaw-sisc/pyclaw-sisc.html}{PyCLAW}}:
-  A petascale application written in Python
-\end{itemize}
-
-    \begin{center}\rule{3in}{0.4pt}\end{center}
-
-\subsection{Performance}\label{performance}
-
-Despite all the great features outlined above, the (mis)perception is
-that Python is too slow for HPC Development. While it is true that
-Python might not be the best language to write your tight loop and
-expect a high percentage of peak flop rate, it turns out that Python has
-a number of tools to help switch those lower-level languages.
-
-To discuss performance I outline three sets of tools: profiling,
-speeding up the python code via c, and speeding up python via python. It
-is my view that Python has some of the best tools for looking at what
-your code's performance is then drilling down to the actual bottle
-necks. Speeding up code without profiling is about like trying to kill a
-deer with an uzi.
-
-\subsubsection{Python tools for
-profiling}\label{python-tools-for-profiling}
-
-\begin{itemize}
-\item
-  \textbf{\href{http://docs.python.org/library/profile.html}{profile and
-  cProfile modules}}: These modules will give you your standard run time
-  analysis and function call stack. It is pretty nice to save their
-  statistics and using the pstats module you can look at the data in a
-  number of ways.
-\item
-  \textbf{\href{http://packages.python.org/line_profiler/}{kernprof}}:
-  this tool puts together many routines for doing things like line by
-  line code timing
-\item
-  \textbf{\href{http://pypi.python.org/pypi/memory_profiler}{memory\_profiler}}:
-  this tool produces line by line memory foot print of your code.
-\item
-  \textbf{\href{http://ipython.org/ipython-doc/dev/interactive/tutorial.html\#magic-functions}{IPython
-  timers}}: The \texttt{timeit} function is quite nice for seeing the
-  differences in functions in a quick interactive way.
-\end{itemize}
-
-\subsubsection{Speeding up Python}\label{speeding-up-python}
-
-\begin{itemize}
-\item
-  \textbf{\href{http://cython.org/}{Cython}}: cython is the quickest way
-  to take a few functions in python and get faster code. You can
-  decorate the function with the cython variant of python and it
-  generates c code. This is very maintable and can also link to other
-  hand written code in c/c++/fortran quite easily. It is by far the
-  preferred tool today.
-\item
-  \textbf{\href{http://docs.python.org/library/ctypes.html}{ctypes}}:
-  ctypes will allow you to write your functions in c and then wrap them
-  quickly with its simple decoration of the code. It handles all the
-  pain of casting from PyObjects and managing the gil to call the c
-  function.
-\end{itemize}
-
-Other approaches exist for writing your code in C but they are all
-somewhat more for taking a C/C++ library and wrapping it in Python.
-
-\subsubsection{Python-only approaches}\label{python-only-approaches}
-
-If you want to stay inside Python mostly, my advice is to figure out
-what data you are using and picking correct data types for implementing
-your algorithms. It has been my experience that you will usually get
-much farther by optimizing your data structures then any low level c
-hack. For example:
-
-\begin{itemize}
-\item
-  \textbf{\href{http://numpy.scipy.org/}{numpy}}: a contingous array
-  very fast for strided operations of arrays
-\item
-  \textbf{\href{http://code.google.com/p/numexpr/}{numexpr}}: a numpy
-  array expression optimizer. It allows for multithreading numpy array
-  expressions and also gets rid of the numerous temporaries numpy makes
-  because of restrictions of the Python interpreter.
-\item
-  \textbf{\href{http://pypi.python.org/pypi/blist}{blist}}: a b-tree
-  implementation of a list, very fast for inserting, indexing, and
-  moving the internal nodes of a list
-\item
-  \textbf{\href{http://pandas.pydata.org/}{pandas}}: data frames (or
-  tables) very fast analytics on the arrays.
-\item
-  \textbf{\href{http://www.pytables.org/moin}{pytables}}: fast
-  structured hierarchical tables (like hdf5), especially good for out of
-  core calculations and queries to large data.
-\end{itemize}
-
-    \begin{center}\rule{3in}{0.4pt}\end{center}
-
-\subsection{Scaling Python}\label{scaling-python}
-
-Right now there are a few distributed Python tools but the list is
-growing rapidly. Here I just give a list the tools and some domain tools
-that are used in HPC that provide a Python interface.
-
-\subsubsection{Distibuted computing
-libraries}\label{distibuted-computing-libraries}
-
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  \textbf{\href{http://mpi4py.scipy.org/}{mpi4py}}: Fastest most
-  complete mpi python wrapper.
-\item
-  \textbf{\href{http://discoproject.org/}{disco}}: Python Hadoop-like
-  framework.
-\item
-  \textbf{\href{http://ipython.org/ipython-doc/dev/parallel/index.html}{IPython
-  Parallel}}: A mpi or zero-mq based parallel python.
-\item
-  \textbf{\href{http://dev.danse.us/trac/pathos}{pathos}}: framework for
-  heterogeneous computing
-\end{itemize}
-
-\subsubsection{Domain specific
-libraries}\label{domain-specific-libraries}
-
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  \textbf{\href{http://code.google.com/p/petsc4py/}{petsc4py}}: Python
-  bindings for PETSc, the Portable, Extensible Toolkit for Scientific
-  Computation.
-\item
-  \textbf{\href{http://slepc4py.googlecode.com/}{slepc4py}}: Python
-  bindings for SLEPc, the Scalable Library for Eigenvalue Problem
-  Computations.
-\item
-  \textbf{\href{http://tao4py.googlecode.com/}{tao4py}}: Python bindings
-  for TAO, the Toolkit for Advanced Optimization.
-\item
-  \textbf{\href{http://trilinos.sandia.gov/packages/pytrilinos/}{pyTrilinos}}:
-  Trilinos wrappers
-\end{itemize}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{tf} \PY{o}{=} \PY{n}{yt}\PY{o}{.}\PY{n}{ColorTransferFunction}\PY{p}{(}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{28}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{25}\PY{p}{)}\PY{p}{)}
+       \PY{n}{tf}\PY{o}{.}\PY{n}{add\PYZus{}layers}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{w}\PY{o}{=}\PY{l+m+mf}{0.03}\PY{p}{)}
+       \PY{n}{cam} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{camera}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mf}{20.0}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{kpc}\PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{512}\PY{p}{,} \PY{n}{tf}\PY{p}{,} \PY{n}{no\PYZus{}ghost}\PY{o}{=}\PY{n+nb+bp}{False}\PY{p}{)}
+       \PY{n}{cam}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{n}{clip\PYZus{}ratio}\PY{o}{=}\PY{l+m+mf}{4.0}\PY{p}{)}
+\end{Verbatim}
 
 
     % Add a bibliography block to the postdoc
