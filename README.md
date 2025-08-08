@@ -12,3 +12,4 @@
 | 8 | MPI | [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pyHPC/pyhpc-tutorial/blob/main/notebooks/8__mpi.ipynb) |  |
 | 9.1 | `nvmath-python`: Interoperability with CPU and GPU tensor libraries | [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/samaid/pyhpc-tutorial/blob/main/notebooks/9_1_nvmath-python_interop.ipynb) |  |
 | 9.2 | `nvmath-python`: Kernel fusion | [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/samaid/pyhpc-tutorial/blob/main/notebooks/9_2_nvmath-python_kernel_fusion.ipynb) |  |
+| 9.3 | `nvmath-python` stateful APIs: Amortizing task preparation costs | [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/samaid/pyhpc-tutorial/blob/main/notebooks/9_3_nvmath-python_stateful_apis.ipynb) |  |
