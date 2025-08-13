@@ -5,6 +5,9 @@ scipy
 matplotlib
 opencv-python
 
+# Jupyter
+jupyter
+
 # CUDA
 cuda-python == 12.9.1 # cuda.{core, bindings, cooperative, parallel}, numba.cuda
 nvmath-python[cu12]
