@@ -1,4 +1,3 @@
-name: Build and Push Docker Image
 
 on:
   push:
@@ -52,4 +51,52 @@ jobs:
             *.tags=${{ steps.meta.outputs.tags }}
             *.labels=${{ steps.meta.outputs.labels }}
           push: true
+
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'build/dockerfile'
+      - 'build/requirements.txt'
+      - 'build/docker-compose.yml'
+      - '.github/workflows/build.yml'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Lowercase the image name
+        run: echo "IMAGE_NAME=${IMAGE_NAME,,}" >> $GITHUB_ENV
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image with Compose
+        run: docker compose -f build/docker-compose.yml build
+
+      - name: Tag Docker images
+        run: |
+          docker tag "$IMAGE_NAME:latest" "$IMAGE_NAME:latest"
+          docker tag "$IMAGE_NAME:latest" "$IMAGE_NAME:git-${GITHUB_SHA::7}"
+
+      - name: Push Docker images
+        run: |
+          docker push "$IMAGE_NAME:latest"
+          docker push "$IMAGE_NAME:git-${GITHUB_SHA::7}"
 
