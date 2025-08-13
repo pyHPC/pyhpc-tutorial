@@ -3,8 +3,8 @@ FROM rapidsai/devcontainers:25.10-cpp-cuda12.9
 COPY . /pyhpc-tutorial
 
 RUN pip install --root-user-action ignore -r /pyhpc-tutorial/build/requirements.txt \
-    git config --global --unset "http.https://github.com/.extraheader" \
-    git config --global --add safe.directory /pyhpc-tutorial
+ && git config --global --unset "http.https://github.com/.extraheader" \
+ && git config --global --add safe.directory /pyhpc-tutorial
 
 WORKDIR /pyhpc-tutorial/notebooks
 
