@@ -1,5 +1,5 @@
 services:
-  backend:
+  jupyter:
     build:
       context: ..
       dockerfile: build/dockerfile
