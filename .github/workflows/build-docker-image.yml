@@ -8,7 +8,7 @@ on:
       - 'build/dockerfile'
       - 'build/requirements.txt'
       - 'build/docker-compose.yml'
-      - '.github/workflows/build.yml'
+      - '.github/workflows/build-docker-image.yml'
 
 jobs:
   build-and-push:
