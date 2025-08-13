@@ -15,13 +15,13 @@ services:
       resources:
         reservations:
           devices:
-            driver: nvidia
-            count: all
-            capabilities: [gpu]
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     ports:
-      "0.0.0.0:8888:8888" # JupyterLab
+      - "0.0.0.0:8888:8888" # JupyterLab
     volumes:
-      /home/ubuntu/pyhpc-tutorial:/pyhpc-tutorial
+      - /home/ubuntu/pyhpc-tutorial:/pyhpc-tutorial
     user: root
     working_dir: /pyhpc-tutorial/notebooks
     command: >
