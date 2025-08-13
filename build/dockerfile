@@ -1,0 +1,7 @@
+FROM rapidsai/devcontainers:25.10-cpp-cuda12.9
+
+WORKDIR /pyhpc-tutorial
+
+COPY . /pyhpc-tutorial
+
+RUN pip install --root-user-action ignore -r build/requirements.txt

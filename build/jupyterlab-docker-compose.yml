@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    image: ghcr.io/pyhpc/pyhpc-tutorial:latest
+    pull_policy: always
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    shm_size: 1g
+    deploy:
+      resources:
+        reservations:
+          devices:
+            driver: nvidia
+            count: all
+            capabilities: [gpu]
+    ports:
+      "0.0.0.0:8888:8888" # JupyterLab
+    volumes:
+      /home/ubuntu/pyhpc-tutorial:/pyhpc-tutorial
+    user: root
+    working_dir: /pyhpc-tutorial/notebooks
+    command: >
+      python -m jupyter lab
+      --allow-root
+      --ip=0.0.0.0
+      --no-browser
+      --NotebookApp.token=''
+      --NotebookApp.password=''
+      --NotebookApp.default_url=''
+    restart: unless-stopped
