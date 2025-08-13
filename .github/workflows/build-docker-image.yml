@@ -4,9 +4,14 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'build/dockerfile'
+      - 'build/requirements.txt'
+      - 'build/docker-compose.yml'
+      - '.github/workflows/build-docker-image.yml'
 
 jobs:
-  build-and-push:
+  build-and-push-docker-image:
     runs-on: ubuntu-latest
     permissions:
       contents: read
