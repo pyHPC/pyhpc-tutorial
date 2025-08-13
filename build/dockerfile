@@ -6,4 +6,6 @@ RUN pip install --root-user-action ignore -r /pyhpc-tutorial/build/requirements.
 
 WORKDIR /pyhpc-tutorial/notebooks
 
+RUN git config --unset-all "http.https://github.com/.extraheader"
+
 ENTRYPOINT git pull && /bin/bash
