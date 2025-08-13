@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image with Compose
-        run: docker compose -f build/docker-compose.yml .
+        run: docker compose -f build/docker-compose.yml build
 
       - name: Tag Docker images
         run: |

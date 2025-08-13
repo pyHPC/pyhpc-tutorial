@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   backend:
     build:
-      context: .
+      context: ..
       dockerfile: build/dockerfile
     image: ghcr.io/pyhpc/pyhpc-tutorial:latest
     pull_policy: always
