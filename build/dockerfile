@@ -2,10 +2,10 @@ FROM rapidsai/devcontainers:25.10-cpp-cuda12.9
 
 COPY . /pyhpc-tutorial
 
-RUN pip install --root-user-action ignore -r /pyhpc-tutorial/build/requirements.txt \
- && git config --global --unset --all "http.https://github.com/.extraheader" || { code=$?; [ "$code" = 5 ] || exit "$code"; } \
- && git config --global --set --append safe.directory "/pyhpc-tutorial"
-
 WORKDIR /pyhpc-tutorial/notebooks
+
+RUN pip install --root-user-action ignore -r /pyhpc-tutorial/build/requirements.txt \
+ && git config --unset-all "http.https://github.com/.extraheader" || { code=$?; [ "$code" = 5 ] || exit "$code"; } \
+ && git config --global --add safe.directory "/pyhpc-tutorial"
 
 ENTRYPOINT git pull && /bin/bash
