@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'build/dockerfile'
+      - 'build/requirements.txt'
+      - '.github/workflows/build-docker-image.yml'
 
 jobs:
   build-and-push:
@@ -28,5 +30,4 @@ jobs:
           context: ./
           dockerfile: build/dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}, ghcr.io/${{ github.repository }}:latest
