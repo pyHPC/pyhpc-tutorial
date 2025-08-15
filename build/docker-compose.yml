@@ -22,12 +22,5 @@ services:
       - /home/ubuntu/pyhpc-tutorial:/pyhpc-tutorial
     user: root
     working_dir: /pyhpc-tutorial/notebooks
-    command: >
-      python -m jupyter lab
-      --allow-root
-      --ip=0.0.0.0
-      --no-browser
-      --NotebookApp.token=''
-      --NotebookApp.password=''
-      --NotebookApp.default_url=''
+    command: ["/bin/bash", "-lc", "exec python -m jupyter lab --allow-root --ip=0.0.0.0 --no-browser --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.default_url=''"]
     restart: unless-stopped
