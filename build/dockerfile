@@ -7,4 +7,5 @@ WORKDIR /pyhpc-tutorial/notebooks
 RUN pip install --root-user-action ignore -r /pyhpc-tutorial/build/requirements.txt \
  && git config --unset-all "http.https://github.com/.extraheader" || { code=$?; [ "$code" = 5 ] || exit "$code"; } \
  && git config --global --add safe.directory "/pyhpc-tutorial" \
+ && mkdir ~/.jupyter \
  && ln -fs /pyhpc-tutorial/build/jupyter_server_config.py ~/.jupyter/jupyter_server_config.py
