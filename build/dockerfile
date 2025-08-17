@@ -7,7 +7,7 @@ WORKDIR /pyhpc-tutorial/notebooks
 RUN pip install --root-user-action ignore -r /pyhpc-tutorial/build/requirements.txt \
  && git config --unset-all "http.https://github.com/.extraheader" || { code=$?; [ "$code" = 5 ] || exit "$code"; } \
  && git config --global --add safe.directory "/pyhpc-tutorial" \
- && mkdir ~/.jupyter \
+ && mkdir -p ~/.jupyter/lab/user-settings/jupyterlab-nvidia-nsight \
  && mkdir -p ~/.local/state/._bash_history \
  && ln -fs /pyhpc-tutorial/build/jupyter_server_config.py ~/.jupyter/jupyter_server_config.py \
  && ln -fs /pyhpc-tutorial/build/jupyter_nsight_plugin_settings.json ~/.jupyter/lab/user-settings/jupyterlab-nvidia-nsight/plugin.jupyterlab-settings

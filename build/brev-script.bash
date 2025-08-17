@@ -21,8 +21,8 @@ source ~/pyhpc-tutorial/.venv/bin/activate
 # Install Python packages
 uv pip install -r ~/pyhpc-tutorial/build/requirements.txt
 
-# Create a Jupyter service
-cat >jupyterlab.service <<'EOF'
+# Create the Jupyter service
+cat >jupyterlab.service <<EOF
 [Unit]
 Description=JupyterLab
 After=network-online.target
@@ -30,16 +30,20 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=ubuntu
-WorkingDirectory=/home/ubuntu/pyhpc-tutorial
-Environment=HOME=/home/ubuntu
-ExecStart=/bin/bash -lc 'source /home/ubuntu/pyhpc-tutorial/.venv/bin/activate; exec python -m jupyter lab --allow-root --ip=0.0.0.0 --no-browser --NotebookApp.token="" --NotebookApp.password="" --NotebookApp.default_url=""'
+User=$(whoami)
+WorkingDirectory=/home/$(whoami)/pyhpc-tutorial
+Environment=HOME=/home/$(whoami)
+ExecStart=/bin/bash -lc 'source /home/$(whoami)/pyhpc-tutorial/.venv/bin/activate; exec python -m jupyter lab --allow-root --ip=0.0.0.0 --no-browser --NotebookApp.token="" --NotebookApp.password="" --NotebookApp.default_url=""'
 Restart=on-failure
 RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
 EOF
+
+mkdir -p ~/.jupyter/lab/user-settings/jupyterlab-nvidia-nsight
+ln -fs ~/pyhpc-tutorial/build/jupyter_server_config.py ~/.jupyter/jupyter_server_config.py
+ln -fs ~/pyhpc-tutorial/build/jupyter_nsight_plugin_settings.json ~/.jupyter/lab/user-settings/jupyterlab-nvidia-nsight/plugin.jupyterlab-settings
 
 sudo mv jupyterlab.service /etc/systemd/system/jupyterlab.service
 sudo systemctl daemon-reload
