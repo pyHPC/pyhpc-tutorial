@@ -21,4 +21,25 @@ source ~/pyhpc-tutorial/.venv/bin/activate
 # Install Python packages
 uv pip install -r ~/pyhpc-tutorial/build/requirements.txt
 
-# TODO: Change Jupyter config to set the right working directory, install Nsight Jupyter plugin, and restart Jupyter
+# Create a Jupyter service
+cat >/etc/systemd/system/jupyterlab.service <<'EOF'
+[Unit]
+Description=JupyterLab
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/pyhpc-tutorial
+Environment=HOME=/home/ubuntu
+ExecStart=/bin/bash -lc 'source /home/ubuntu/pyhpc-tutorial/.venv/bin/activate; exec python -m jupyter lab --allow-root --ip=0.0.0.0 --no-browser --NotebookApp.token="" --NotebookApp.password="" --NotebookApp.default_url=""'
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable --now jupyterlab.service
