@@ -1,0 +1,13 @@
+{
+  "ui": {
+    "enabled": true,
+    "suppressServerAddressWarning": true,
+  },
+  "nsys": {
+    "installationPath": "/usr/local/cuda",
+    "args": "--trace=cuda,nvtx,osrt --python-sampling=true --python-backtrace=cuda --cudabacktrace=all",
+  },
+  "ncu": {
+    "installationPath": "/usr/local/cuda",
+  }
+}

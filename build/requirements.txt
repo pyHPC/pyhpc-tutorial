@@ -7,6 +7,7 @@ opencv-python
 
 # Jupyter
 jupyter
+jupyterlab-nvidia-nsight
 
 # CUDA
 cuda-python == 12.9.1 # cuda.{core, bindings, cooperative, parallel}, numba.cuda
