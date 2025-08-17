@@ -22,7 +22,7 @@ source ~/pyhpc-tutorial/.venv/bin/activate
 uv pip install -r ~/pyhpc-tutorial/build/requirements.txt
 
 # Create a Jupyter service
-cat >/etc/systemd/system/jupyterlab.service <<'EOF'
+cat >jupyterlab.service <<'EOF'
 [Unit]
 Description=JupyterLab
 After=network-online.target
@@ -41,5 +41,6 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
-systemctl daemon-reload
-systemctl enable --now jupyterlab.service
+sudo mv jupyterlab.service /etc/systemd/system/jupyterlab.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now jupyterlab.service
