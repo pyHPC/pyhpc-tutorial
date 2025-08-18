@@ -11,7 +11,7 @@ RUN pip install --root-user-action ignore -r /pyhpc-tutorial/build/requirements.
  && git config --global --add safe.directory "/pyhpc-tutorial" \
  && mkdir -p ~/.jupyter/lab/user-settings/jupyterlab-nvidia-nsight \
  && mkdir -p ~/.local/state/._bash_history \
- && ln -fs /pyhpc-tutorial/build/jupyter_server_config.py ~/.jupyter/jupyter_server_config.py
+ && ln -fs /pyhpc-tutorial/build/jupyter_server_config.py ~/.jupyter/jupyter_server_config.py \
+ && python -m jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
 
 CMD ["/pyhpc-tutorial/build/jupyter-start.bash"]
-
