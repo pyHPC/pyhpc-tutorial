@@ -10,14 +10,6 @@ cat << EOF
     "host": "${EXTERNAL_IP}",
     "dockerHost": "${EXTERNAL_IP}",
     "defaultStreamerAddress": "http://${EXTERNAL_IP}"
-  },
-  "nsys": {
-    "installationPath": "/usr/local/cuda",
-    "args": "--trace=cuda,nvtx,osrt --python-sampling=true --python-backtrace=cuda --cudabacktrace=all"
-  },
-  "ncu": {
-    "installationPath": "/usr/local/cuda"
   }
 }
 EOF
-
