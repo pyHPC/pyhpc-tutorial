@@ -9,7 +9,7 @@ cat << EOF
     "suppressServerAddressWarning": true,
     "host": "${EXTERNAL_IP}",
     "dockerHost": "${EXTERNAL_IP}",
-    "defaultStreamerAddress": "${EXTERNAL_IP}"
+    "defaultStreamerAddress": "http://${EXTERNAL_IP}"
   },
   "nsys": {
     "installationPath": "/usr/local/cuda",
