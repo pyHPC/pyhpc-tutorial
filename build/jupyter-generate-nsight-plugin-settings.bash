@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JUPYTER_HOST="nsight-jupyter0-${BREV_ENV_ID}.brevlab.com"
-NSIGHT_HTTP_URL="https://nsight-http0-${BREV_ENV_ID}.brevlab.com:8080"
+NSIGHT_HTTP_URL="https://nsight-http0-${BREV_ENV_ID}.brevlab.com"
 
 cat << EOF
 {
