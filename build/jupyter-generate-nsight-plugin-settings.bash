@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EXTERNAL_IP=$(curl https://ipecho.net/plain)
+EXTERNAL_IP=$(curl -sSL https://ipecho.net/plain)
 
 cat << EOF
 {
