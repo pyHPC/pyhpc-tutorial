@@ -18,7 +18,7 @@ c = get_config()  #noqa
 ## Set the log level by value or name.
 #  Choices: any of [0, 10, 20, 30, 40, 50, 'DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL']
 #  Default: 30
-# c.Application.log_level = 30
+c.Application.log_level = 'INFO'
 
 ## Configure additional log handlers.
 #
@@ -65,7 +65,22 @@ c = get_config()  #noqa
 #         },
 #     }
 #  Default: {}
-# c.Application.logging_config = {}
+c.Application.logging_config = {
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "level": "INFO",
+            "filename": "/raid/blelbach/dev/pyhpc-tutorial/build/jupyter_server.log",
+            "formatter": "console"
+        }
+    },
+    "loggers": {
+        "ServerApp": {
+            "level": "INFO",
+            "handlers": ["console", "file"]
+        }
+    }
+}
 
 ## Instead of starting the Application, dump configuration to stdout
 #  Default: False
@@ -1824,4 +1839,3 @@ c.ServerApp.terminado_settings = { 'shell_command': ['/bin/bash'] }
 
 #  See also: BaseKernelWebsocketConnection.session
 # c.ZMQChannelsWebsocketConnection.session = None
-
