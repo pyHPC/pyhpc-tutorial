@@ -3,7 +3,7 @@ numpy
 # Scientific/numeric
 scipy
 matplotlib
-opencv-python
+opencv-python-headless
 
 # Jupyter
 jupyter
