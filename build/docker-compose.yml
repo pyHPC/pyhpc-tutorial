@@ -20,11 +20,29 @@ services:
       - "0.0.0.0:8888:8888" # JupyterLab
     volumes:
       - /home/ubuntu/pyhpc-tutorial:/pyhpc-tutorial
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
     user: root
-    group_add:
-      - docker
     working_dir: /pyhpc-tutorial/notebooks
     command: ["/bin/bash", "-lc", "exec python -m jupyter lab --allow-root --ip=0.0.0.0 --no-browser --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.default_url=''"]
+    restart: unless-stopped
+  nsight-streamer:
+    image: nvcr.io/nvidia/devtools/nsight-streamer-nsys:2025.3.1
+    pull_policy: always
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    shm_size: 1g
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - "0.0.0.0:8080:8080" # HTTP
+      - "0.0.0.0:3478:3478" # TURN
+    volumes:
+      - /home/ubuntu/pyhpc-tutorial:/pyhpc-tutorial
+    user: root
+    working_dir: /pyhpc-tutorial/notebooks
     restart: unless-stopped
