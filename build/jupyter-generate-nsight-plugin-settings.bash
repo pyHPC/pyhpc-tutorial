@@ -9,7 +9,7 @@ cat << EOF
     "suppressServerAddressWarning": true,
     "host": "${EXTERNAL_IP}",
     "dockerHost": "${EXTERNAL_IP}",
-    "defaultStreamerAddress": "http://${EXTERNAL_IP}"
+    "defaultStreamerAddress": "http://${EXTERNAL_IP}:8080"
   }
 }
 EOF
