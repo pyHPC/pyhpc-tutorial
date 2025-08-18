@@ -8,5 +8,4 @@ exec python -m jupyter lab \
   --no-browser \
   --NotebookApp.token='' \
   --NotebookApp.password='' \
-  --NotebookApp.default_url=''"
-
+  --NotebookApp.default_url=''
