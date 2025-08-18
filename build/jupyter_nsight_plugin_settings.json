@@ -2,6 +2,7 @@
   "ui": {
     "enabled": true,
     "suppressServerAddressWarning": true,
+    "dockerHost": "127.0.0.1",
   },
   "nsys": {
     "installationPath": "/usr/local/cuda",
