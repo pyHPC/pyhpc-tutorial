@@ -38,6 +38,8 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+    environment:
+      - NVIDIA_DRIVER_CAPABILITIES=all
     ports:
       - "0.0.0.0:8080:8080" # HTTP
       - "0.0.0.0:3478:3478" # TURN
