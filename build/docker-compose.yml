@@ -23,7 +23,7 @@ services:
     user: root
     working_dir: /pyhpc-tutorial/notebooks
     restart: unless-stopped
-  nsight-streamer:
+  nsight:
     image: nvcr.io/nvidia/devtools/nsight-streamer-nsys:2025.3.1
     pull_policy: always
     ulimits:
