@@ -43,7 +43,7 @@ services:
       - WEB_USERNAME=""
       - WEB_PASSWORD=""
       - SELKIES_TURN_HOST=nsight-turn0-${BREV_ENV_ID}.brevlab.com
-      - SELKIES_TURN_PORT=80
+      - TURN_PORT=80
     ports:
       - "0.0.0.0:8080:8080" # HTTP
       - "0.0.0.0:3478:3478" # TURN
