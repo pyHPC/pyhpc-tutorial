@@ -20,6 +20,8 @@ services:
       - "0.0.0.0:8888:8888" # JupyterLab
     volumes:
       - /home/ubuntu/pyhpc-tutorial:/pyhpc-tutorial
+    environment:
+      - BREV_ENV_ID
     user: root
     working_dir: /pyhpc-tutorial/notebooks
     restart: unless-stopped
@@ -37,18 +39,14 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-    environment:
-      - NVIDIA_DRIVER_CAPABILITIES=all
-      - HOST_IP=0.0.0.0
-      - WEB_USERNAME=""
-      - WEB_PASSWORD=""
-      - SELKIES_TURN_HOST=nsight-turn0-${BREV_ENV_ID}.brevlab.com
-      - TURN_PORT=80
     ports:
       - "0.0.0.0:8080:8080" # HTTP
       - "0.0.0.0:3478:3478" # TURN
     volumes:
       - /home/ubuntu/pyhpc-tutorial:/pyhpc-tutorial
+    environment:
+      - BREV_ENV_ID
     user: root
     working_dir: /pyhpc-tutorial/notebooks
+    entrypoint: ["/pyhpc-tutorial/build/nsight-start.bash"]
     restart: unless-stopped
