@@ -5,6 +5,7 @@ services:
       dockerfile: build/dockerfile
     image: ghcr.io/pyhpc/pyhpc-tutorial:latest
     pull_policy: always
+    privileged: true
     ulimits:
       memlock: -1
       stack: 67108864
